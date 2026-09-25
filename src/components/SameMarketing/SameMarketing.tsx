@@ -21,8 +21,8 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
       gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
-        // Statement reveal
-        gsap.from(".problem-statement", {
+        // Problem headline
+        gsap.from(".ps-headline", {
           y: 60,
           opacity: 0,
           duration: 1.2,
@@ -34,7 +34,7 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
         });
 
         // Problem points staggered
-        gsap.utils.toArray<HTMLElement>(".problem-point").forEach((el, i) => {
+        gsap.utils.toArray<HTMLElement>(".ps-point").forEach((el, i) => {
           gsap.from(el, {
             y: 30,
             opacity: 0,
@@ -47,6 +47,18 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
             },
           });
         });
+
+        // Solution block
+        gsap.from(".ps-solution", {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".ps-solution",
+            start: "top 75%",
+          },
+        });
       }, sectionRef);
     };
 
@@ -57,48 +69,77 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
   return (
     <section ref={sectionRef} className={styles.section}>
       <div className={styles.container}>
-        {/* The big statement */}
-        <div className={styles.statementBlock}>
-          <h2 className={`${styles.statement} problem-statement`}>
-            Multi-million-dollar properties
+        {/* ── PROBLEM ── */}
+        <div className={styles.problemBlock}>
+          <p className={`${styles.sectionLabel} ps-headline`}>The problem</p>
+          <h2 className={`${styles.headline} ps-headline`}>
+            Your buyers can&apos;t experience
             <br />
-            <span className={styles.statementRed}>deserve more than a listing.</span>
+            <span className={styles.headlineRed}>
+              the property from a distance.
+            </span>
           </h2>
-        </div>
 
-        {/* The problem */}
-        <div className={styles.problemContent}>
-          <div className={styles.problemIntro}>
-            <p className={`${styles.problemText} problem-point`}>
-              A property worth $5M receives the same digital experience as a
-              property worth $500K. The same grid of photos. The same scrollable
-              description. The same passive browsing experience.
-            </p>
-          </div>
+          <p className={`${styles.problemText} ps-point`}>
+            An international buyer can see the photos. Read the listing. Watch a
+            video. But they still haven&apos;t experienced the property.
+          </p>
 
           <div className={styles.problemGrid}>
-            <div className={`${styles.problemItem} problem-point`}>
+            <div className={`${styles.problemItem} ps-point`}>
               <span className={styles.problemDash}>—</span>
-              <p>The buyer scrolls through images</p>
+              <p>Scroll through photos</p>
             </div>
-            <div className={`${styles.problemItem} problem-point`}>
+            <div className={`${styles.problemItem} ps-point`}>
               <span className={styles.problemDash}>—</span>
-              <p>Reads a description</p>
+              <p>Read the listing</p>
             </div>
-            <div className={`${styles.problemItem} problem-point`}>
+            <div className={`${styles.problemItem} ps-point`}>
               <span className={styles.problemDash}>—</span>
-              <p>Maybe watches a video</p>
+              <p>Watch a video</p>
             </div>
-            <div className={`${styles.problemItem} problem-point`}>
+            <div className={`${styles.problemItem} ps-point`}>
               <span className={styles.problemDash}>—</span>
-              <p>Then leaves</p>
+              <p>Leave without taking the next step</p>
             </div>
           </div>
+        </div>
 
-          <p className={`${styles.conclusion} problem-point`}>
-            That experience does not communicate the full value of the property.
-            It does not build confidence. It does not differentiate.
+        {/* ── SOLUTION ── */}
+        <div className={`${styles.solutionBlock} ps-solution`}>
+          <p className={styles.solutionLabel}>The solution</p>
+          <h3 className={styles.solutionHeadline}>
+            We let buyers experience the property
+            <br />
+            <span className={styles.headlineRed}>
+              from anywhere in the world.
+            </span>
+          </h3>
+
+          <p className={styles.solutionText}>
+            A buyer can sit at home, in another country, and experience your
+            property before they visit.
           </p>
+
+          {/* Outcome */}
+          <div className={styles.outcomeBlock}>
+            <div className={styles.outcomeItem}>
+              <span className={styles.outcomeDot} />
+              <p>Better understanding of the property</p>
+            </div>
+            <div className={styles.outcomeItem}>
+              <span className={styles.outcomeDot} />
+              <p>More confidence before visiting</p>
+            </div>
+            <div className={styles.outcomeItem}>
+              <span className={styles.outcomeDot} />
+              <p>Faster decisions</p>
+            </div>
+            <div className={styles.outcomeItem}>
+              <span className={styles.outcomeDot} />
+              <p>Faster movement from enquiry to viewing to offer</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -5,10 +5,7 @@ import Navigation from "@/components/Navigation/Navigation";
 import TrustLogos from "@/components/TrustLogos/TrustLogos";
 import ImmediateProof from "@/components/ImmediateProof/ImmediateProof";
 import SameMarketing from "@/components/SameMarketing/SameMarketing";
-import NewPossibility from "@/components/NewPossibility/NewPossibility";
-import Mechanism from "@/components/Mechanism/Mechanism";
 import ProofWall from "@/components/ProofWall/ProofWall";
-import PropertyDemo from "@/components/PropertyDemo/PropertyDemo";
 import CaseStudies from "@/components/CaseStudies/CaseStudies";
 import FinalCTA from "@/components/FinalCTA/FinalCTA";
 import Footer from "@/components/Footer/Footer";
@@ -48,38 +45,29 @@ export default function Home() {
       />
 
       <main>
-        {/* ACT I: Cinematic Opening */}
+        {/* 1. HERO */}
         <Hero
           onContactClick={openContact}
           onCaseStudiesClick={scrollToCases}
           gsapReady={gsapReady}
         />
 
-        {/* Trusted By Industry Leaders */}
+        {/* 2. TRUSTED BY INDUSTRY LEADERS */}
         <TrustLogos />
 
-        {/* ACT II: Immediate Evidence */}
+        {/* 3. TESTIMONIALS — Real Results From Real Clients */}
         <ImmediateProof gsapReady={gsapReady} />
 
-        {/* ACT III: The Problem */}
+        {/* 4. PROBLEM + SOLUTION */}
         <SameMarketing gsapReady={gsapReady} />
 
-        {/* ACT IV: The New Possibility */}
-        <NewPossibility gsapReady={gsapReady} />
-
-        {/* ACT V: How We Do It */}
-        <Mechanism gsapReady={gsapReady} />
-
-        {/* ACT VI: Evidence Room */}
+        {/* 5. EVIDENCE, NOT ADJECTIVES — Proof Room */}
         <ProofWall gsapReady={gsapReady} />
 
-        {/* ACT VII: Experience the Product */}
-        <PropertyDemo gsapReady={gsapReady} />
-
-        {/* ACT VIII: Real Cases */}
+        {/* 6. CASE STUDIES — Horizontal Carousel */}
         <CaseStudies gsapReady={gsapReady} />
 
-        {/* ACT IX: Take Action */}
+        {/* 7. FINAL CTA */}
         <FinalCTA onContactClick={openContact} gsapReady={gsapReady} />
       </main>
 

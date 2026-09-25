@@ -1,5 +1,5 @@
 /* ============================================
-   CASE STUDIES
+   CASE STUDIES — Horizontal Swipe Carousel
    ============================================ */
 
 .section {
@@ -7,16 +7,17 @@
   padding-bottom: var(--space-section);
   background: var(--black);
   border-top: 1px solid var(--black-border);
+  overflow: hidden;
 }
 
-.container {
+.headerContainer {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
 
 .header {
-  margin-bottom: clamp(3rem, 6vh, 5rem);
+  margin-bottom: clamp(2rem, 5vh, 4rem);
 }
 
 .label {
@@ -36,19 +37,45 @@
   color: var(--white);
 }
 
-/* --- Case List --- */
-.caseList {
+/* --- Horizontal Carousel --- */
+.carousel {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 1rem;
+  padding: 0 var(--gutter);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
 }
 
 /* --- Case Card --- */
 .caseCard {
+  min-width: 82vw;
+  max-width: 86vw;
+  flex-shrink: 0;
+  scroll-snap-align: start;
   background: var(--black-card);
   border: 1px solid var(--black-border);
   overflow: hidden;
-  transition: border-color var(--duration-normal) var(--ease-out);
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.cardActive {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cardInactive {
+  opacity: 0.45;
+  transform: scale(0.97);
 }
 
 .caseCard:hover {
@@ -62,7 +89,7 @@
 
 .mediaPlaceholder {
   width: 100%;
-  aspect-ratio: 21 / 9;
+  aspect-ratio: 16 / 9;
   background: linear-gradient(
     145deg,
     var(--black-soft) 0%,
@@ -85,7 +112,7 @@
 
 /* Case details */
 .caseDetails {
-  padding: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(1.2rem, 3vw, 2rem);
 }
 
 .caseMeta {
@@ -93,7 +120,7 @@
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .caseProperty {
@@ -119,18 +146,11 @@
 .caseFlow {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .caseFlow {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
+  gap: 1.2rem;
 }
 
 .caseStep {
-  padding-top: 1rem;
+  padding-top: 0.8rem;
   border-top: 1px solid var(--black-border);
 }
 
@@ -141,7 +161,7 @@
   text-transform: uppercase;
   color: var(--red);
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .stepText {
@@ -153,4 +173,71 @@
 .resultText {
   color: var(--white-muted);
   font-weight: var(--weight-medium);
+}
+
+/* --- Pagination Dots --- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--grey-700);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.dot:hover {
+  background: var(--grey-500);
+}
+
+.dotActive {
+  background: var(--red);
+  transform: scale(1.25);
+}
+
+/* --- Desktop: larger cards, drag-scroll --- */
+@media (min-width: 769px) {
+  .carousel {
+    gap: 1.5rem;
+  }
+
+  .caseCard {
+    min-width: 55vw;
+    max-width: 60vw;
+    border-radius: 6px;
+  }
+
+  .caseFlow {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .caseDetails {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+}
+
+@media (min-width: 1200px) {
+  .caseCard {
+    min-width: 45vw;
+    max-width: 50vw;
+  }
+}
+
+/* --- Smaller mobile --- */
+@media (max-width: 375px) {
+  .caseCard {
+    min-width: 85vw;
+    max-width: 90vw;
+  }
 }

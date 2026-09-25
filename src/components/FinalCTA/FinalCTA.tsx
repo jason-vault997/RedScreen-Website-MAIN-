@@ -44,6 +44,18 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
             start: "top 60%",
           },
         });
+
+        gsap.from(".final-doodle", {
+          opacity: 0,
+          scale: 0.8,
+          duration: 0.6,
+          delay: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 60%",
+          },
+        });
       }, sectionRef);
     };
 
@@ -59,7 +71,7 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
             Your next multi-million-dollar listing
             <br />
             <span className={styles.headingRed}>
-              deserves more than a listing.
+              deserves to be closed faster.
             </span>
           </h2>
 
@@ -67,12 +79,51 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
             Have a property worth showing differently?
           </p>
 
-          <button
-            onClick={onContactClick}
-            className={`btn btn--primary ${styles.ctaBtn} final-cta-btn`}
-          >
-            Get In Touch
-          </button>
+          {/* CTA area with doodle */}
+          <div className={styles.ctaArea}>
+            <button
+              onClick={onContactClick}
+              className={`btn btn--primary ${styles.ctaBtn} final-cta-btn`}
+            >
+              Get In Touch
+            </button>
+
+            {/* Red hand-drawn doodle arrow + founder note */}
+            <div className={`${styles.doodleWrap} final-doodle`}>
+              {/* Curved arrow SVG — hand-drawn style */}
+              <svg
+                className={styles.doodleArrow}
+                viewBox="0 0 80 60"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M8 52C12 28 28 12 56 8"
+                  stroke="var(--red)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                  strokeDasharray="2 0"
+                />
+                {/* Arrow head */}
+                <path
+                  d="M48 4L57 8L50 15"
+                  stroke="var(--red)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              </svg>
+              <p className={styles.founderNote}>
+                The founder may speak
+                <br />
+                if you qualify :)
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
