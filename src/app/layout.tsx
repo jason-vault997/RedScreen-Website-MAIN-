@@ -28,20 +28,40 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Responsive preload: only the viewport-appropriate figure downloads */}
+        {/* Responsive preload: WebP — 20KB vs 836KB PNG, viewport-specific */}
+        {/* Mobile: crowd + figure both preloaded so both arrive before JS */}
         <link
           rel="preload"
           as="image"
-          href="/images/hero/hero-mobile-figure.png"
+          href="/images/hero/hero-mobile-crowd.webp"
           media="(max-width: 768px)"
           fetchPriority="high"
+          type="image/webp"
         />
         <link
           rel="preload"
           as="image"
-          href="/images/hero/hero-desktop-figure.png"
+          href="/images/hero/hero-mobile-figure.webp"
+          media="(max-width: 768px)"
+          fetchPriority="high"
+          type="image/webp"
+        />
+        {/* Desktop: crowd + figure */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero/hero-desktop-crowd.webp"
           media="(min-width: 769px)"
           fetchPriority="high"
+          type="image/webp"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero/hero-desktop-figure.webp"
+          media="(min-width: 769px)"
+          fetchPriority="high"
+          type="image/webp"
         />
       </head>
       <body>

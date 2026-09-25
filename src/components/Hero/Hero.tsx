@@ -16,160 +16,112 @@ export default function Hero({
   gsapReady,
 }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const [figureLoaded, setFigureLoaded] = useState(false);
   const [figureVisible, setFigureVisible] = useState(false);
   const [headlineRevealed, setHeadlineRevealed] = useState(false);
   const [subRevealed, setSubRevealed] = useState(false);
   const [scribbleDrawn, setScribbleDrawn] = useState(false);
   const hasRevealedRef = useRef(false);
 
-  // Called when the illuminated figure image finishes loading/decoding
-  const handleFigureLoad = useCallback(() => {
-    setFigureLoaded(true);
+  // Trigger the full reveal sequence — called as soon as the figure loads
+  const startRevealSequence = useCallback(() => {
+    if (hasRevealedRef.current) return;
+    hasRevealedRef.current = true;
+
+    // Immediately: figure fades in + headline begins
+    setFigureVisible(true);
+    setHeadlineRevealed(true);
+
+    // +500ms: scribble underline draws
+    setTimeout(() => setScribbleDrawn(true), 500);
+
+    // +900ms: supporting copy
+    setTimeout(() => setSubRevealed(true), 900);
   }, []);
 
-  // Core automatic intro sequence — purely time-driven, NO scroll dependency
+  // Called by the mobile figure's onLoad — triggers reveal immediately
+  const handleMobileFigureLoad = useCallback(() => {
+    startRevealSequence();
+  }, [startRevealSequence]);
+
+  // Called by the desktop figure's onLoad — triggers reveal immediately
+  const handleDesktopFigureLoad = useCallback(() => {
+    startRevealSequence();
+  }, [startRevealSequence]);
+
+  // Absolute safety fallback — if somehow the image never fires onLoad
+  // (e.g. cached image where onLoad doesn't reliably fire in all browsers)
+  // reveal after 2.5s no matter what
   useEffect(() => {
-    const timers: ReturnType<typeof setTimeout>[] = [];
-
-    const startRevealSequence = () => {
-      if (hasRevealedRef.current) return;
-      hasRevealedRef.current = true;
-
-      // Immediately: figure fades in + headline begins
-      setFigureVisible(true);
-      setHeadlineRevealed(true);
-
-      // +500ms: scribble underline
-      timers.push(
-        setTimeout(() => {
-          setScribbleDrawn(true);
-        }, 500)
-      );
-
-      // +1000ms: supporting copy
-      timers.push(
-        setTimeout(() => {
-          setSubRevealed(true);
-        }, 1000)
-      );
-    };
-
-    // Start at T=800ms if figure is already loaded, otherwise wait for load
-    const initialTimer = setTimeout(() => {
-      if (figureLoaded) {
-        startRevealSequence();
-      }
-    }, 800);
-    timers.push(initialTimer);
-
-    // Absolute max wait: 3s — reveal even if image hasn't loaded (fallback)
-    const maxWaitTimer = setTimeout(() => {
+    const fallback = setTimeout(() => {
       startRevealSequence();
-    }, 3000);
-    timers.push(maxWaitTimer);
+    }, 2500);
+    return () => clearTimeout(fallback);
+  }, [startRevealSequence]);
 
-    return () => timers.forEach(clearTimeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // If figure loads after the 800ms timer already fired, reveal immediately
+  // NO GSAP parallax on hero content — removing the scroll-y transform
+  // that was causing text displacement + zoom effect on mobile
+  // Only register GSAP if needed for other hero effects
   useEffect(() => {
-    if (figureLoaded && !hasRevealedRef.current) {
-      // Image loaded but timer hasn't fired yet — wait for timer
-      return;
-    }
-    if (figureLoaded && !figureVisible) {
-      // Timer already fired but was waiting for image — reveal now
-      hasRevealedRef.current = true;
-      setFigureVisible(true);
-      setHeadlineRevealed(true);
-      setTimeout(() => setScribbleDrawn(true), 500);
-      setTimeout(() => setSubRevealed(true), 1000);
-    }
-  }, [figureLoaded, figureVisible]);
-
-  // GSAP parallax on scroll (does NOT control initial reveal)
-  useEffect(() => {
-    if (!gsapReady || !sectionRef.current) return;
-
-    let ctx: { revert: () => void } | null = null;
-
-    const init = async () => {
-      const { default: gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
-
-      ctx = gsap.context(() => {
-        gsap.to(".hero-content-wrap", {
-          y: -80,
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1.5,
-          },
-        });
-      }, sectionRef);
-    };
-
-    init();
-    return () => ctx?.revert();
+    if (!gsapReady) return;
+    // Intentionally left empty — hero content is scroll-stable
+    // We do NOT apply any scroll-driven transform to .hero-content-wrap
   }, [gsapReady]);
 
   return (
     <section ref={sectionRef} className={styles.hero} id="hero">
       {/* ===== IMAGE LAYERS ===== */}
       <div className={styles.imageContainer}>
-        {/* MOBILE composition */}
+        {/* MOBILE composition — WebP, priority, no lazy */}
         <div className={styles.mobileImages}>
           <Image
-            src="/images/hero/hero-mobile-crowd.png"
+            src="/images/hero/hero-mobile-crowd.webp"
             alt="Global crowd of potential property buyers"
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className={styles.crowdImage}
             style={{ objectFit: "cover", objectPosition: "center top" }}
           />
           <Image
-            src="/images/hero/hero-mobile-figure.png"
+            src="/images/hero/hero-mobile-figure.webp"
             alt=""
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className={`${styles.figureImage} ${
               figureVisible ? styles.figureVisible : ""
             }`}
             style={{ objectFit: "cover", objectPosition: "center top" }}
-            onLoad={handleFigureLoad}
+            onLoad={handleMobileFigureLoad}
           />
         </div>
 
-        {/* DESKTOP composition */}
+        {/* DESKTOP composition — WebP, priority, no lazy */}
         <div className={styles.desktopImages}>
           <Image
-            src="/images/hero/hero-desktop-crowd-new.png"
+            src="/images/hero/hero-desktop-crowd.webp"
             alt="Global crowd of potential property buyers"
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className={styles.crowdImage}
             style={{ objectFit: "cover", objectPosition: "center center" }}
           />
           <Image
-            src="/images/hero/hero-desktop-figure.png"
+            src="/images/hero/hero-desktop-figure.webp"
             alt=""
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className={`${styles.figureImage} ${
               figureVisible ? styles.figureVisible : ""
             }`}
             style={{ objectFit: "cover", objectPosition: "center center" }}
-            onLoad={handleFigureLoad}
+            onLoad={handleDesktopFigureLoad}
           />
         </div>
 
@@ -178,7 +130,8 @@ export default function Hero({
       </div>
 
       {/* ===== CONTENT OVERLAY ===== */}
-      <div className={`${styles.contentOverlay} hero-content-wrap`}>
+      {/* No hero-content-wrap GSAP class — scroll must not move this */}
+      <div className={styles.contentOverlay}>
         {/* Navigation bar in hero */}
         <header className={styles.heroNav}>
           <a href="#" className={styles.logoLink} aria-label="RedScreen Studios Home">
@@ -220,7 +173,7 @@ export default function Hero({
               className={`${styles.headlineLine} ${
                 headlineRevealed ? styles.revealed : ""
               }`}
-              style={{ transitionDelay: "0.1s" }}
+              style={{ transitionDelay: "0.08s" }}
             >
               We help
             </span>
@@ -228,7 +181,7 @@ export default function Hero({
               className={`${styles.headlineLine} ${styles.headlineRed} ${
                 headlineRevealed ? styles.revealed : ""
               }`}
-              style={{ transitionDelay: "0.2s" }}
+              style={{ transitionDelay: "0.16s" }}
             >
               million-dollar
             </span>
@@ -236,7 +189,7 @@ export default function Hero({
               className={`${styles.headlineLine} ${
                 headlineRevealed ? styles.revealed : ""
               }`}
-              style={{ transitionDelay: "0.3s" }}
+              style={{ transitionDelay: "0.24s" }}
             >
               properties
             </span>
@@ -244,7 +197,7 @@ export default function Hero({
               className={`${styles.headlineLine} ${
                 headlineRevealed ? styles.revealed : ""
               }`}
-              style={{ transitionDelay: "0.4s" }}
+              style={{ transitionDelay: "0.32s" }}
             >
               close
             </span>
@@ -252,7 +205,7 @@ export default function Hero({
               className={`${styles.headlineLine} ${
                 headlineRevealed ? styles.revealed : ""
               }`}
-              style={{ transitionDelay: "0.5s" }}
+              style={{ transitionDelay: "0.4s" }}
             >
               faster.
             </span>
@@ -263,7 +216,7 @@ export default function Hero({
             className={`${styles.fasterWrap} ${
               headlineRevealed ? styles.revealed : ""
             }`}
-            style={{ transitionDelay: "0.6s" }}
+            style={{ transitionDelay: "0.5s" }}
           >
             <span className={styles.fasterText}>
               than ever.
@@ -300,16 +253,6 @@ export default function Hero({
             anywhere in the world.
           </p>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div
-        className={`${styles.scrollIndicator} ${
-          subRevealed ? styles.revealed : ""
-        }`}
-        aria-hidden="true"
-      >
-        <div className={styles.scrollLine} />
       </div>
     </section>
   );

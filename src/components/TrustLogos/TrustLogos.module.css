@@ -75,13 +75,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 36px;
+  height: 54px;
 }
 
 .logoImage {
   width: auto;
   height: 100%;
-  max-height: 36px;
+  max-height: 54px;
   object-fit: contain;
   opacity: 0.55;
   filter: grayscale(30%);
@@ -105,26 +105,26 @@
   }
 
   .logoItem {
-    height: 26px;
+    height: 39px;
   }
 
   .logoImage {
-    max-height: 26px;
+    max-height: 39px;
   }
 
   .marqueeTrack {
-    gap: 1.8rem;
-    animation-duration: 30s;
+    gap: 2.5rem;
+    animation-duration: 35s;
   }
 }
 
 @media (min-width: 769px) {
   .logoItem {
-    height: 40px;
+    height: 60px;
   }
 
   .logoImage {
-    max-height: 40px;
+    max-height: 60px;
   }
 }
 

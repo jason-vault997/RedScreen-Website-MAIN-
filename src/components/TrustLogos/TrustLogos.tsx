@@ -29,9 +29,10 @@ export default function TrustLogos() {
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                width={120}
-                height={40}
+                width={180}
+                height={60}
                 className={styles.logoImage}
+                style={{ width: "auto" }}
                 loading="lazy"
               />
             </div>
