@@ -1,0 +1,159 @@
+/* ============================================
+   NAVIGATION — Sticky, appears after hero
+   ============================================ */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 var(--gutter);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.5s var(--ease-out), opacity 0.5s var(--ease-out);
+  pointer-events: none;
+}
+
+.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  height: 60px;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* --- Wordmark Logo --- */
+.wordmark {
+  font-family: var(--font-primary);
+  font-size: 0.95rem;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.wordmarkRed {
+  color: var(--red);
+}
+
+.wordmarkWhite {
+  color: var(--white);
+}
+
+/* --- Premium Nav Buttons --- */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-weight: var(--weight-medium);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--white-muted);
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.navBtn:hover {
+  color: var(--white);
+}
+
+.navBtn:active {
+  transform: translateY(0.5px);
+}
+
+/* Ghost variant */
+.navBtnGhost {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  padding: 0.45rem 1.1rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    background var(--duration-normal) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.navBtnGhost:hover {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.navBtnGhost:active {
+  transform: translateY(0);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .inner {
+    height: 52px;
+  }
+
+  .wordmark {
+    font-size: 0.85rem;
+  }
+
+  .navBtn {
+    font-size: 0.6rem;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .navBtnGhost {
+    font-size: 0.6rem;
+    padding: 0.35rem 0.8rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .actions {
+    gap: 1rem;
+  }
+
+  .wordmark {
+    font-size: 1.05rem;
+  }
+
+  .navBtn {
+    font-size: 0.72rem;
+  }
+
+  .navBtnGhost {
+    font-size: 0.72rem;
+    padding: 0.5rem 1.3rem;
+  }
+}

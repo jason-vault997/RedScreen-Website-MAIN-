@@ -1,0 +1,84 @@
+/* ============================================
+   SAME MARKETING — The Problem
+   ============================================ */
+
+.section {
+  padding-top: var(--space-section);
+  padding-bottom: var(--space-section);
+  background: var(--black-deep);
+  border-top: 1px solid var(--black-border);
+}
+
+.container {
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Statement block */
+.statementBlock {
+  margin-bottom: clamp(3rem, 7vh, 6rem);
+}
+
+.statement {
+  font-size: var(--text-display);
+  font-weight: var(--weight-black);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: var(--white);
+}
+
+.statementRed {
+  color: var(--red);
+}
+
+/* Problem content */
+.problemContent {
+  max-width: 680px;
+}
+
+.problemIntro {
+  margin-bottom: clamp(2rem, 4vh, 3.5rem);
+}
+
+.problemText {
+  font-size: var(--text-medium);
+  font-weight: var(--weight-regular);
+  color: var(--grey-300);
+  line-height: 1.7;
+}
+
+/* Problem grid — dashes */
+.problemGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: clamp(2rem, 4vh, 3.5rem);
+  padding-left: 0.5rem;
+}
+
+.problemItem {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: var(--text-body);
+  color: var(--grey-400);
+  line-height: 1.6;
+}
+
+.problemDash {
+  color: var(--red);
+  font-weight: var(--weight-bold);
+  flex-shrink: 0;
+}
+
+/* Conclusion */
+.conclusion {
+  font-size: var(--text-medium);
+  font-weight: var(--weight-medium);
+  color: var(--white-muted);
+  line-height: 1.7;
+  border-left: 2px solid var(--red);
+  padding-left: 1.5rem;
+}

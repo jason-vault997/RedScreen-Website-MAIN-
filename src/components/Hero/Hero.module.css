@@ -1,0 +1,504 @@
+/* ============================================
+   HERO — Full-screen cinematic opening
+   ============================================ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--black);
+}
+
+/* --- Image Layers --- */
+.imageContainer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Mobile/Desktop toggle */
+.mobileImages {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.desktopImages {
+  display: none;
+  position: absolute;
+  inset: 0;
+}
+
+@media (min-width: 769px) {
+  .mobileImages {
+    display: none;
+  }
+  .desktopImages {
+    display: block;
+  }
+}
+
+/* Crowd base layer */
+.crowdImage {
+  z-index: 1;
+}
+
+/* Illuminated figure overlay — starts hidden, 0.5s reveal */
+.figureImage {
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+
+.figureVisible {
+  opacity: 1;
+}
+
+/* Bottom gradient: image → black */
+.bottomGradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  z-index: 3;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.25) 25%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.88) 75%,
+    var(--black) 100%
+  );
+  pointer-events: none;
+}
+
+/* --- Content Overlay --- */
+.contentOverlay {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 var(--gutter);
+}
+
+/* --- Hero Nav --- */
+.heroNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: max(env(safe-area-inset-top, 0px), 1.2rem);
+  flex-shrink: 0;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* --- Wordmark Logo --- */
+.wordmark {
+  font-family: var(--font-primary);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.wordmarkRed {
+  color: var(--red);
+}
+
+.wordmarkWhite {
+  color: var(--white);
+}
+
+/* --- Premium Hero Buttons --- */
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.heroBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-weight: var(--weight-medium);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--white-muted);
+  background: transparent;
+  border: none;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+  position: relative;
+  transition:
+    color var(--duration-fast) var(--ease-out);
+}
+
+.heroBtn:hover {
+  color: var(--white);
+}
+
+.heroBtn:active {
+  transform: translateY(0.5px);
+}
+
+/* Ghost variant — outlined premium button */
+.heroBtnGhost {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  padding: 0.55rem 1.3rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    background var(--duration-normal) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.heroBtnGhost:hover {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-1px);
+}
+
+.heroBtnGhost:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* --- Headline Area --- */
+.headlineArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+  max-width: 800px;
+}
+
+/* Red micro-label / eyebrow */
+.microLabel {
+  font-size: var(--text-hero-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.microLabel.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Main headline */
+.headline {
+  font-size: var(--text-hero);
+  font-weight: var(--weight-black);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0.1em;
+}
+
+.headlineLine {
+  display: block;
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+
+.headlineLine.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* MILLION-DOLLAR red treatment */
+.headlineRed {
+  color: var(--red);
+}
+
+/* "than ever." */
+.fasterWrap {
+  margin-top: 0.3em;
+  margin-bottom: 1.4rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.fasterWrap.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fasterText {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: var(--weight-regular);
+  color: var(--white-muted);
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.01em;
+}
+
+/* Hand-drawn scribble underline */
+.scribbleUnderline {
+  position: absolute;
+  bottom: -6px;
+  left: -4px;
+  width: calc(100% + 8px);
+  height: 12px;
+  overflow: visible;
+}
+
+.scribblePath {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: none;
+}
+
+.scribbleDrawn .scribblePath {
+  animation: drawScribble 0.7s ease-out forwards;
+}
+
+@keyframes drawScribble {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Supporting subhead */
+.subhead {
+  font-size: var(--text-hero-sub);
+  font-weight: var(--weight-regular);
+  color: var(--grey-300);
+  line-height: 1.6;
+  max-width: 520px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+.subhead.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Scroll Indicator --- */
+.scrollIndicator {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 1s var(--ease-out) 0.5s;
+}
+
+.scrollIndicator.revealed {
+  opacity: 0.4;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 40px;
+  background: var(--white);
+  animation: scrollPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scaleY(1.3);
+    transform-origin: top;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .heroNav {
+    padding-top: max(env(safe-area-inset-top, 0px), 0.8rem);
+  }
+
+  .wordmark {
+    font-size: 0.9rem;
+  }
+
+  .heroBtn {
+    font-size: 0.62rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .heroBtnGhost {
+    font-size: 0.62rem;
+    padding: 0.4rem 0.9rem;
+  }
+
+  /* Mobile headline: LEFT-ALIGNED, positioned to match Figma */
+  .headlineArea {
+    justify-content: flex-end;
+    align-items: flex-start;
+    text-align: left;
+    padding-bottom: clamp(1.5rem, 3vh, 3rem);
+    max-width: 100%;
+  }
+
+  .microLabel {
+    font-size: 0.68rem;
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .headline {
+    font-size: clamp(2.4rem, 10vw, 3.4rem);
+    letter-spacing: -0.025em;
+    line-height: 1;
+    margin-bottom: 0.05em;
+  }
+
+  .fasterText {
+    font-size: clamp(0.9rem, 3.8vw, 1.1rem);
+  }
+
+  .fasterWrap {
+    margin-top: 0.4em;
+    margin-bottom: 1.4rem;
+  }
+
+  .subhead {
+    font-size: clamp(0.95rem, 4vw, 1.05rem);
+    max-width: 92%;
+  }
+
+  .bottomGradient {
+    height: 55%;
+  }
+
+  /* Hide scroll indicator on mobile — trust section is the continuation */
+  .scrollIndicator {
+    display: none;
+  }
+}
+
+@media (max-width: 375px) {
+  .headline {
+    font-size: clamp(2rem, 9.5vw, 2.8rem);
+  }
+
+  .microLabel {
+    font-size: 0.6rem;
+  }
+}
+
+/* ============================================
+   DESKTOP ENHANCEMENTS
+   ============================================ */
+
+@media (min-width: 769px) {
+  .heroNav {
+    padding-top: 1.5rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .wordmark {
+    font-size: 1.15rem;
+  }
+
+  .heroActions {
+    gap: 1rem;
+  }
+
+  .heroBtn {
+    font-size: 0.72rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .heroBtnGhost {
+    font-size: 0.72rem;
+    padding: 0.55rem 1.5rem;
+  }
+
+  .headlineArea {
+    max-width: var(--max-width);
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-bottom: clamp(4rem, 10vh, 8rem);
+  }
+
+  .headline {
+    font-size: clamp(3rem, 5.5vw, 5.5rem);
+  }
+
+  .fasterText {
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  }
+
+  .subhead {
+    max-width: 550px;
+    font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  }
+}
+
+@media (min-width: 1200px) {
+  .headline {
+    font-size: clamp(3.5rem, 5vw, 5.5rem);
+  }
+}
+
+/* --- Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .figureImage {
+    transition: none;
+  }
+
+  .figureVisible {
+    opacity: 1;
+  }
+
+  .microLabel,
+  .headlineLine,
+  .fasterWrap,
+  .subhead {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .scribblePath {
+    stroke-dashoffset: 0;
+  }
+
+  .scrollLine {
+    animation: none;
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,70 @@
+/* ============================================
+   FINAL CTA
+   ============================================ */
+
+.section {
+  position: relative;
+  padding-top: clamp(6rem, 14vh, 12rem);
+  padding-bottom: clamp(6rem, 14vh, 12rem);
+  background: var(--black-deep);
+  border-top: 1px solid var(--black-border);
+  overflow: hidden;
+}
+
+.container {
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  position: relative;
+  z-index: 2;
+}
+
+.content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heading {
+  font-size: var(--text-section);
+  font-weight: var(--weight-black);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.headingRed {
+  color: var(--red);
+}
+
+.subtext {
+  font-size: var(--text-medium);
+  color: var(--grey-300);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.ctaBtn {
+  padding: 1rem 3rem;
+  font-size: 0.8rem;
+}
+
+/* Subtle red glow at bottom */
+.glowEffect {
+  position: absolute;
+  bottom: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(196, 30, 36, 0.06) 0%,
+    transparent 70%
+  );
+  z-index: 1;
+  pointer-events: none;
+}

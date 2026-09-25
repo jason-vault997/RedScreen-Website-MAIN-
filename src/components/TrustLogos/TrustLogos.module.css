@@ -1,0 +1,146 @@
+/* ============================================
+   TRUST LOGOS — Seamless infinite marquee, left-to-right
+   ============================================ */
+
+.section {
+  padding: clamp(1.5rem, 3vh, 2.5rem) 0;
+  background: var(--black);
+  overflow: hidden;
+}
+
+.heading {
+  font-family: var(--font-primary);
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grey-400);
+  text-align: center;
+  margin-bottom: clamp(1rem, 2vh, 1.8rem);
+}
+
+/* --- Marquee Container --- */
+.marqueeContainer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Edge fade masks */
+.edgeFadeLeft,
+.edgeFadeRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(2rem, 8vw, 5rem);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.edgeFadeLeft {
+  left: 0;
+  background: linear-gradient(to right, var(--black) 0%, transparent 100%);
+}
+
+.edgeFadeRight {
+  right: 0;
+  background: linear-gradient(to left, var(--black) 0%, transparent 100%);
+}
+
+/* --- Marquee Track: seamless infinite LEFT-TO-RIGHT ---
+   We have 3 copies of logos. The track translates from 
+   -(1/3 of total width) → 0%, then loops. Because we start 
+   at -33.333% and move to 0%, the reset is invisible since 
+   the second set of logos is identical to the first. */
+.marqueeTrack {
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  width: max-content;
+  animation: marqueeSeamless 45s linear infinite;
+}
+
+@keyframes marqueeSeamless {
+  0% {
+    transform: translateX(calc(-100% / 3));
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* --- Logo Items --- */
+.logoItem {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+}
+
+.logoImage {
+  width: auto;
+  height: 100%;
+  max-height: 36px;
+  object-fit: contain;
+  opacity: 0.55;
+  filter: grayscale(30%);
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.logoImage:hover {
+  opacity: 0.85;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .section {
+    padding: clamp(1rem, 2vh, 2rem) 0;
+  }
+
+  .heading {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+  }
+
+  .logoItem {
+    height: 26px;
+  }
+
+  .logoImage {
+    max-height: 26px;
+  }
+
+  .marqueeTrack {
+    gap: 1.8rem;
+    animation-duration: 30s;
+  }
+}
+
+@media (min-width: 769px) {
+  .logoItem {
+    height: 40px;
+  }
+
+  .logoImage {
+    max-height: 40px;
+  }
+}
+
+/* --- Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0 var(--gutter);
+    gap: 2rem;
+  }
+
+  /* Hide duplicated logos when animation is off — show only first 5 */
+  .logoItem:nth-child(n+6) {
+    display: none;
+  }
+}

@@ -1,0 +1,76 @@
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+  background: var(--black);
+  border-top: 1px solid var(--black-border);
+  padding: clamp(3rem, 6vh, 5rem) 0 clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: clamp(2rem, 4vh, 4rem);
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.brand {
+  flex-shrink: 0;
+}
+
+.locations {
+  display: flex;
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+.location {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.locationLabel {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--white);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.locationCity {
+  font-size: var(--text-xs);
+  color: var(--grey-500);
+}
+
+.bottom {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--black-border);
+}
+
+.copyright {
+  font-size: var(--text-micro);
+  color: var(--grey-600);
+  letter-spacing: 0.02em;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .top {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .locations {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
