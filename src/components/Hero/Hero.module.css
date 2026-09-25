@@ -54,12 +54,12 @@
   z-index: 1;
 }
 
-/* Illuminated figure overlay — starts hidden
-   Reveal: smooth 0.85s as soon as asset ready */
+/* Illuminated figure overlay — starts barely visible (0.1),
+   fades to 1.0 over 450ms once reveal is triggered */
 .figureImage {
   z-index: 2;
-  opacity: 0;
-  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.1;
+  transition: opacity 0.45s cubic-bezier(0.33, 1, 0.68, 1);
   will-change: opacity;
 }
 
@@ -216,7 +216,7 @@
   margin-bottom: 0.8rem;
   opacity: 0;
   transform: translateY(15px);
-  transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
 }
 
 .microLabel.revealed {
@@ -239,7 +239,7 @@
   display: block;
   opacity: 0;
   transform: translateY(22px);
-  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
 }
 
 .headlineLine.revealed {
@@ -258,7 +258,7 @@
   margin-bottom: 1.2rem;
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
 }
 
 .fasterWrap.revealed {
@@ -310,7 +310,7 @@
   max-width: 520px;
   opacity: 0;
   transform: translateY(15px);
-  transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
 }
 
 .subhead.revealed {
@@ -353,7 +353,7 @@
     justify-content: flex-end;
     align-items: flex-start;
     text-align: left;
-    padding-bottom: clamp(1.8rem, 5vh, 3.5rem);
+    padding-bottom: clamp(1.2rem, 3vh, 2.5rem);
     max-width: 100%;
   }
 

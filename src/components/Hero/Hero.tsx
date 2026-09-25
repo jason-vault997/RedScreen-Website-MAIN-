@@ -16,45 +16,52 @@ export default function Hero({
   gsapReady,
 }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
+  const [figureReady, setFigureReady] = useState(false);
   const [figureVisible, setFigureVisible] = useState(false);
   const [headlineRevealed, setHeadlineRevealed] = useState(false);
   const [subRevealed, setSubRevealed] = useState(false);
   const [scribbleDrawn, setScribbleDrawn] = useState(false);
   const hasRevealedRef = useRef(false);
 
-  // Trigger the full reveal sequence — called as soon as the figure loads
+  // Trigger the full reveal sequence — called 500ms after figure is ready
   const startRevealSequence = useCallback(() => {
     if (hasRevealedRef.current) return;
     hasRevealedRef.current = true;
 
-    // Immediately: figure fades in + headline begins
+    // Figure fades from 0.1 → 1.0 + headline begins
     setFigureVisible(true);
     setHeadlineRevealed(true);
 
     // +500ms: scribble underline draws
     setTimeout(() => setScribbleDrawn(true), 500);
 
-    // +900ms: supporting copy
-    setTimeout(() => setSubRevealed(true), 900);
+    // +800ms: supporting copy
+    setTimeout(() => setSubRevealed(true), 800);
   }, []);
 
-  // Called by the mobile figure's onLoad — triggers reveal immediately
+  // Called when the figure image fires onLoad — marks it ready
   const handleMobileFigureLoad = useCallback(() => {
-    startRevealSequence();
-  }, [startRevealSequence]);
+    setFigureReady(true);
+  }, []);
 
-  // Called by the desktop figure's onLoad — triggers reveal immediately
   const handleDesktopFigureLoad = useCallback(() => {
-    startRevealSequence();
-  }, [startRevealSequence]);
+    setFigureReady(true);
+  }, []);
 
-  // Absolute safety fallback — if somehow the image never fires onLoad
-  // (e.g. cached image where onLoad doesn't reliably fire in all browsers)
-  // reveal after 2.5s no matter what
+  // Once figure is ready, wait 500ms then reveal
+  useEffect(() => {
+    if (!figureReady) return;
+    const timer = setTimeout(() => {
+      startRevealSequence();
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [figureReady, startRevealSequence]);
+
+  // Absolute safety fallback — reveal after 3s no matter what
   useEffect(() => {
     const fallback = setTimeout(() => {
       startRevealSequence();
-    }, 2500);
+    }, 3000);
     return () => clearTimeout(fallback);
   }, [startRevealSequence]);
 

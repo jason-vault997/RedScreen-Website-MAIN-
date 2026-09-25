@@ -1,5 +1,5 @@
 /* ============================================
-   FINAL CTA — Exclusive conversion close
+   FINAL CTA — Exclusive conversion close with founder sticky note
    ============================================ */
 
 .section {
@@ -52,7 +52,7 @@
   font-size: 0.8rem;
 }
 
-/* --- CTA Area: button + doodle wrapper --- */
+/* ── CTA Area ── */
 .ctaArea {
   display: flex;
   flex-direction: column;
@@ -60,33 +60,58 @@
   position: relative;
 }
 
-/* --- Doodle wrapper: arrow + founder note --- */
-.doodleWrap {
+/* ============================================
+   FOUNDER STICKY NOTE
+   ============================================ */
+.stickyNote {
+  position: relative;
+  margin-top: 2rem;
   display: flex;
   align-items: flex-start;
-  gap: 0.3rem;
-  margin-top: 1.2rem;
-  position: relative;
 }
 
-.doodleArrow {
-  width: 50px;
-  height: 40px;
+/* Red hand-drawn arrow */
+.stickyArrow {
+  width: 42px;
+  height: 36px;
   flex-shrink: 0;
-  transform: scaleX(-1) rotate(-15deg);
+  position: relative;
+  top: -6px;
   opacity: 0.85;
 }
 
-.founderNote {
+/* The sticky card — slightly rotated, warm off-white */
+.stickyCard {
+  background: rgba(255, 252, 245, 0.06);
+  border: 1px solid rgba(255, 252, 245, 0.1);
+  padding: 0.9rem 1.1rem;
+  transform: rotate(2deg);
+  border-radius: 2px;
+  position: relative;
+  /* Subtle paper shadow */
+  box-shadow:
+    2px 3px 8px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.stickyText {
   font-family: 'Georgia', 'Times New Roman', serif;
   font-size: 0.78rem;
   font-style: italic;
-  color: var(--grey-400);
-  line-height: 1.5;
-  letter-spacing: 0.01em;
+  color: var(--grey-300);
+  line-height: 1.55;
+  letter-spacing: 0.005em;
   text-align: left;
-  position: relative;
-  top: 0.2rem;
+}
+
+.stickySignature {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--red);
+  text-align: right;
 }
 
 /* Subtle red glow at bottom */
@@ -106,7 +131,7 @@
   pointer-events: none;
 }
 
-/* --- Mobile --- */
+/* ── Mobile ── */
 @media (max-width: 768px) {
   .heading {
     font-size: clamp(1.5rem, 6vw, 2.2rem);
@@ -121,12 +146,48 @@
     font-size: 0.75rem;
   }
 
-  .doodleArrow {
-    width: 40px;
-    height: 32px;
+  .stickyNote {
+    margin-top: 1.5rem;
   }
 
-  .founderNote {
+  .stickyArrow {
+    width: 34px;
+    height: 28px;
+  }
+
+  .stickyCard {
+    padding: 0.7rem 0.9rem;
+    transform: rotate(1.5deg);
+  }
+
+  .stickyText {
     font-size: 0.72rem;
+  }
+
+  .stickySignature {
+    font-size: 0.66rem;
+  }
+}
+
+/* ── Desktop: sticky note to the side ── */
+@media (min-width: 769px) {
+  .ctaArea {
+    position: relative;
+  }
+
+  .stickyNote {
+    position: absolute;
+    right: -220px;
+    top: -10px;
+  }
+
+  .stickyCard {
+    transform: rotate(3deg);
+  }
+}
+
+@media (min-width: 1200px) {
+  .stickyNote {
+    right: -280px;
   }
 }

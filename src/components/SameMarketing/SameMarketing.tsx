@@ -21,43 +21,19 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
       gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
-        // Problem headline
-        gsap.from(".ps-headline", {
-          y: 60,
-          opacity: 0,
-          duration: 1.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 60%",
-          },
-        });
-
-        // Problem points staggered
-        gsap.utils.toArray<HTMLElement>(".ps-point").forEach((el, i) => {
+        // Stagger the reveals
+        gsap.utils.toArray<HTMLElement>(".ps-reveal").forEach((el, i) => {
           gsap.from(el, {
             y: 30,
             opacity: 0,
             duration: 0.8,
-            delay: 0.3 + i * 0.12,
+            delay: i * 0.08,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 50%",
+              trigger: el,
+              start: "top 85%",
             },
           });
-        });
-
-        // Solution block
-        gsap.from(".ps-solution", {
-          y: 40,
-          opacity: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".ps-solution",
-            start: "top 75%",
-          },
         });
       }, sectionRef);
     };
@@ -70,76 +46,137 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
     <section ref={sectionRef} className={styles.section}>
       <div className={styles.container}>
         {/* ── PROBLEM ── */}
-        <div className={styles.problemBlock}>
-          <p className={`${styles.sectionLabel} ps-headline`}>The problem</p>
-          <h2 className={`${styles.headline} ps-headline`}>
-            Your buyers can&apos;t experience
-            <br />
-            <span className={styles.headlineRed}>
-              the property from a distance.
+        <p className={`${styles.eyebrow} ps-reveal`}>The problem</p>
+
+        <h2 className={`${styles.headline} ps-reveal`}>
+          Your buyers can&apos;t
+          <br />
+          experience{" "}
+          <span className={styles.headlineRed}>
+            the property from a distance.
+          </span>
+        </h2>
+
+        <p className={`${styles.context} ps-reveal`}>
+          An international buyer can see the photos. Read the listing.
+          Watch a video. But they still haven&apos;t{" "}
+          <em>experienced</em> the property.
+        </p>
+
+        {/* ── VISUAL PATHWAY: Problem → Insight → Solution ── */}
+        <div className={styles.pathway}>
+          {/* Compact problem flow */}
+          <div className={`${styles.flowSteps} ps-reveal`}>
+            <span className={styles.flowStep}>Photos</span>
+            <span className={styles.flowArrow}>→</span>
+            <span className={styles.flowStep}>Listing</span>
+            <span className={styles.flowArrow}>→</span>
+            <span className={styles.flowStep}>Video</span>
+            <span className={styles.flowArrow}>→</span>
+            <span className={`${styles.flowStep} ${styles.flowStepFade}`}>
+              No experience
             </span>
-          </h2>
+          </div>
 
-          <p className={`${styles.problemText} ps-point`}>
-            An international buyer can see the photos. Read the listing. Watch a
-            video. But they still haven&apos;t experienced the property.
-          </p>
+          {/* Curved dashed pathway SVG */}
+          <svg
+            className={`${styles.pathwaySvg} ps-reveal`}
+            viewBox="0 0 300 120"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <path
+              d="M30 10 C80 10, 100 50, 150 60 S220 80, 270 110"
+              stroke="rgba(255,255,255,0.08)"
+              strokeWidth="1.5"
+              strokeDasharray="6 4"
+              strokeLinecap="round"
+              fill="none"
+            />
+            {/* Red accent dot at midpoint */}
+            <circle cx="150" cy="60" r="4" fill="var(--red)" opacity="0.7" />
+            {/* Arrow at end */}
+            <path
+              d="M262 104L271 111L264 116"
+              stroke="var(--red)"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0.6"
+            />
+          </svg>
 
-          <div className={styles.problemGrid}>
-            <div className={`${styles.problemItem} ps-point`}>
-              <span className={styles.problemDash}>—</span>
-              <p>Scroll through photos</p>
-            </div>
-            <div className={`${styles.problemItem} ps-point`}>
-              <span className={styles.problemDash}>—</span>
-              <p>Read the listing</p>
-            </div>
-            <div className={`${styles.problemItem} ps-point`}>
-              <span className={styles.problemDash}>—</span>
-              <p>Watch a video</p>
-            </div>
-            <div className={`${styles.problemItem} ps-point`}>
-              <span className={styles.problemDash}>—</span>
-              <p>Leave without taking the next step</p>
-            </div>
+          {/* Key fact / insight */}
+          <div className={`${styles.insightCard} ps-reveal`}>
+            <p className={styles.insightText}>
+              UAE is the world&apos;s highest country with the most number of
+              international buyers.
+            </p>
+            {/* Red scribble double underline */}
+            <svg
+              className={styles.scribbleDouble}
+              viewBox="0 0 240 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M4 3C20 7 40 2 60 5C80 8 100 3 120 6C140 3 160 7 180 4C200 7 220 3 236 5"
+                stroke="var(--red)"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                fill="none"
+              />
+              <path
+                d="M4 8C20 11 40 7 60 10C80 12 100 7 120 10C140 7 160 11 180 8C200 11 220 7 236 9"
+                stroke="var(--red)"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                fill="none"
+                opacity="0.5"
+              />
+            </svg>
+            <span className={styles.insightSource}>
+              Market insight · Prototype data
+            </span>
           </div>
         </div>
 
         {/* ── SOLUTION ── */}
-        <div className={`${styles.solutionBlock} ps-solution`}>
-          <p className={styles.solutionLabel}>The solution</p>
+        <div className={`${styles.solutionBlock} ps-reveal`}>
+          <p className={styles.eyebrow}>The solution</p>
+
           <h3 className={styles.solutionHeadline}>
-            We let buyers experience the property
-            <br />
-            <span className={styles.headlineRed}>
-              from anywhere in the world.
+            We make it possible for anyone to actually experience your
+            property from{" "}
+            <span className={styles.solutionHighlight}>
+              anywhere in the world.
+              <svg
+                className={styles.scribbleSolution}
+                viewBox="0 0 260 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M4 5C25 9 50 3 75 6C100 9 125 3 150 6C175 3 200 8 225 5C240 3 250 7 256 6"
+                  stroke="var(--red)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
             </span>
           </h3>
 
-          <p className={styles.solutionText}>
-            A buyer can sit at home, in another country, and experience your
-            property before they visit.
+          <p className={styles.solutionSub}>
+            A buyer can sit at home in another country and experience your
+            property even before they visit.
           </p>
-
-          {/* Outcome */}
-          <div className={styles.outcomeBlock}>
-            <div className={styles.outcomeItem}>
-              <span className={styles.outcomeDot} />
-              <p>Better understanding of the property</p>
-            </div>
-            <div className={styles.outcomeItem}>
-              <span className={styles.outcomeDot} />
-              <p>More confidence before visiting</p>
-            </div>
-            <div className={styles.outcomeItem}>
-              <span className={styles.outcomeDot} />
-              <p>Faster decisions</p>
-            </div>
-            <div className={styles.outcomeItem}>
-              <span className={styles.outcomeDot} />
-              <p>Faster movement from enquiry to viewing to offer</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>

@@ -45,11 +45,12 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
           },
         });
 
-        gsap.from(".final-doodle", {
+        gsap.from(".founder-note", {
           opacity: 0,
-          scale: 0.8,
-          duration: 0.6,
-          delay: 0.6,
+          scale: 0.85,
+          rotate: -5,
+          duration: 0.7,
+          delay: 0.5,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -79,7 +80,7 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
             Have a property worth showing differently?
           </p>
 
-          {/* CTA area with doodle */}
+          {/* CTA + founder note area */}
           <div className={styles.ctaArea}>
             <button
               onClick={onContactClick}
@@ -88,40 +89,46 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
               Get In Touch
             </button>
 
-            {/* Red hand-drawn doodle arrow + founder note */}
-            <div className={`${styles.doodleWrap} final-doodle`}>
-              {/* Curved arrow SVG — hand-drawn style */}
+            {/* Founder sticky-note annotation */}
+            <div className={`${styles.stickyNote} founder-note`}>
+              {/* Red hand-drawn arrow pointing toward CTA */}
               <svg
-                className={styles.doodleArrow}
-                viewBox="0 0 80 60"
+                className={styles.stickyArrow}
+                viewBox="0 0 60 50"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
               >
                 <path
-                  d="M8 52C12 28 28 12 56 8"
+                  d="M50 42C45 25 32 14 12 8"
                   stroke="var(--red)"
-                  strokeWidth="2"
+                  strokeWidth="1.8"
                   strokeLinecap="round"
-                  strokeLinejoin="round"
                   fill="none"
-                  strokeDasharray="2 0"
                 />
-                {/* Arrow head */}
                 <path
-                  d="M48 4L57 8L50 15"
+                  d="M18 3L11 8L16 14"
                   stroke="var(--red)"
-                  strokeWidth="2"
+                  strokeWidth="1.8"
                   strokeLinecap="round"
-                  strokeLinejoin="round"
                   fill="none"
                 />
               </svg>
-              <p className={styles.founderNote}>
-                The founder may speak
-                <br />
-                if you qualify :)
-              </p>
+
+              <div className={styles.stickyCard}>
+                <p className={styles.stickyText}>
+                  Taking on a small number of new
+                  <br />
+                  properties this month. If you&apos;re serious
+                  <br />
+                  about showing yours differently,
+                  <br />
+                  let&apos;s talk.
+                </p>
+                <span className={styles.stickySignature}>
+                  — the founder :)
+                </span>
+              </div>
             </div>
           </div>
         </div>
