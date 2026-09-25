@@ -1,5 +1,6 @@
 /* ============================================
-   PROBLEM + SOLUTION — Simplified narrative with visual pathway
+   PROBLEM → FACT → CONSEQUENCE → SOLUTION
+   Continuous hand-drawn roadmap visual
    ============================================ */
 
 .section {
@@ -15,8 +16,121 @@
   padding: 0 var(--gutter);
 }
 
-/* ── Eyebrow ── */
-.eyebrow {
+/* ── The Roadmap ── One continuous visual flow */
+.roadmap {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ── Individual stops ── */
+.stop {
+  padding: 0;
+}
+
+/* ── Dashed path segments between stops ── */
+.pathSegment {
+  width: 70%;
+  max-width: 280px;
+  height: auto;
+  display: block;
+  margin: 0.4rem 0;
+  align-self: flex-start;
+  opacity: 0.9;
+}
+
+/* Reversed path — curves from right to left */
+.pathReverse {
+  align-self: flex-end;
+}
+
+/* ============================================
+   STOP 1 — THE PROBLEM
+   ============================================ */
+.stopProblem {
+  margin-bottom: 0;
+}
+
+.problemHeading {
+  font-size: clamp(2.4rem, 8vw, 4.5rem);
+  font-weight: var(--weight-black);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--white);
+  line-height: 1.05;
+}
+
+/* ============================================
+   STOP 2 — UAE FACT
+   ============================================ */
+.stopFact {
+  max-width: 520px;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+}
+
+.factText {
+  font-size: clamp(1rem, 3.8vw, 1.2rem);
+  font-weight: var(--weight-medium);
+  color: var(--white-muted);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+/* "AS OF 2026" + red double underline */
+.factDate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 0.3rem;
+}
+
+.dateText {
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--grey-300);
+}
+
+.dateUnderline {
+  width: 80px;
+  height: 10px;
+  display: block;
+  margin-top: 2px;
+}
+
+/* ============================================
+   STOP 3 — THE CONSEQUENCE
+   ============================================ */
+.stopConsequence {
+  max-width: 540px;
+}
+
+.consequenceText {
+  font-size: clamp(1.1rem, 4vw, 1.35rem);
+  font-weight: var(--weight-semibold);
+  color: var(--white);
+  line-height: 1.5;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.consequenceEmphasis {
+  color: var(--red);
+  font-weight: var(--weight-bold);
+}
+
+/* ============================================
+   STOP 4 — THE SOLUTION
+   ============================================ */
+.stopSolution {
+  max-width: 540px;
+  padding-top: 0.5rem;
+}
+
+.solutionEyebrow {
   font-size: var(--text-xs);
   font-weight: var(--weight-semibold);
   letter-spacing: 0.1em;
@@ -25,142 +139,26 @@
   margin-bottom: 0.8rem;
 }
 
-/* ── Problem Headline ── */
-.headline {
-  font-size: var(--text-display);
-  font-weight: var(--weight-black);
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  line-height: 1.05;
-  color: var(--white);
-  margin-bottom: clamp(1.2rem, 3vh, 2rem);
-}
-
-.headlineRed {
-  color: var(--red);
-}
-
-/* ── Context paragraph ── */
-.context {
-  font-size: var(--text-body);
-  color: var(--grey-300);
-  line-height: 1.7;
-  max-width: 580px;
-  margin-bottom: clamp(2rem, 4vh, 3rem);
-}
-
-.context em {
-  font-style: italic;
-  color: var(--white-muted);
-}
-
-/* ============================================
-   VISUAL PATHWAY
-   ============================================ */
-.pathway {
-  position: relative;
-  margin-bottom: clamp(2.5rem, 5vh, 4rem);
-}
-
-/* Compact flow steps: Photos → Listing → Video → No experience */
-.flowSteps {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
-
-.flowStep {
-  font-size: var(--text-small);
-  font-weight: var(--weight-medium);
-  color: var(--grey-400);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.flowStepFade {
-  color: var(--grey-600);
-  font-style: italic;
-  text-transform: none;
-}
-
-.flowArrow {
-  font-size: 0.7rem;
-  color: var(--grey-600);
-  opacity: 0.5;
-}
-
-/* Curved dashed pathway SVG */
-.pathwaySvg {
-  width: 100%;
-  max-width: 280px;
-  height: auto;
-  display: block;
-  margin: 0 auto 1.5rem;
-  opacity: 0.8;
-}
-
-/* ── Key fact / insight card ── */
-.insightCard {
-  position: relative;
-  max-width: 460px;
-  padding: 0 0 0 1rem;
-  border-left: 2px solid rgba(196, 30, 36, 0.4);
-}
-
-.insightText {
-  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
-  font-weight: var(--weight-medium);
-  color: var(--white-muted);
-  line-height: 1.6;
-  margin-bottom: 0.3rem;
-}
-
-/* Red scribble double underline SVG */
-.scribbleDouble {
-  width: min(100%, 240px);
-  height: 12px;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.insightSource {
-  font-size: var(--text-micro);
-  font-weight: var(--weight-regular);
-  letter-spacing: 0.06em;
-  color: var(--grey-600);
-}
-
-/* ============================================
-   SOLUTION
-   ============================================ */
-.solutionBlock {
-  padding-top: clamp(1.5rem, 3vh, 2.5rem);
-}
-
 .solutionHeadline {
-  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+  font-size: clamp(1.2rem, 4.5vw, 1.7rem);
   font-weight: var(--weight-bold);
   color: var(--white);
-  line-height: 1.35;
+  line-height: 1.4;
   margin-bottom: clamp(1rem, 2vh, 1.5rem);
-  max-width: 540px;
 }
 
 .solutionHighlight {
   position: relative;
   display: inline;
-  color: var(--white);
 }
 
-/* Red scribble under "anywhere in the world" */
-.scribbleSolution {
+/* Straight red hand-drawn underline under "anywhere in the world" */
+.straightUnderline {
   position: absolute;
-  bottom: -4px;
+  bottom: -3px;
   left: -2px;
   width: calc(100% + 4px);
-  height: 10px;
+  height: 6px;
 }
 
 .solutionSub {
@@ -170,18 +168,60 @@
   max-width: 480px;
 }
 
-/* ── Mobile ── */
+/* ============================================
+   MOBILE
+   ============================================ */
 @media (max-width: 768px) {
-  .headline {
-    font-size: clamp(1.6rem, 6.5vw, 2.4rem);
+  .problemHeading {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .pathSegment {
+    width: 65%;
+    max-width: 240px;
+    margin: 0.6rem 0;
+  }
+
+  .stopFact {
+    padding-left: 0.8rem;
+  }
+
+  .factText {
+    font-size: clamp(0.92rem, 3.6vw, 1.05rem);
+  }
+
+  .consequenceText {
+    font-size: clamp(0.95rem, 3.8vw, 1.15rem);
   }
 
   .solutionHeadline {
-    font-size: clamp(1.15rem, 4.5vw, 1.5rem);
+    font-size: clamp(1.05rem, 4.2vw, 1.35rem);
+  }
+}
+
+/* ============================================
+   DESKTOP
+   ============================================ */
+@media (min-width: 769px) {
+  .roadmap {
+    padding-left: 2rem;
   }
 
-  .pathwaySvg {
-    max-width: 220px;
-    margin: 0 0 1.2rem 0;
+  .pathSegment {
+    width: 50%;
+    max-width: 360px;
+    margin: 0.8rem 0;
+  }
+
+  .stopFact {
+    margin-left: 3rem;
+  }
+
+  .stopConsequence {
+    margin-left: 1rem;
+  }
+
+  .stopSolution {
+    margin-left: 4rem;
   }
 }

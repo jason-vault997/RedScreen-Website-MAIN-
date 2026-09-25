@@ -21,17 +21,16 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
       gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
-        // Stagger the reveals
         gsap.utils.toArray<HTMLElement>(".ps-reveal").forEach((el, i) => {
           gsap.from(el, {
-            y: 30,
+            y: 28,
             opacity: 0,
-            duration: 0.8,
-            delay: i * 0.08,
+            duration: 0.9,
+            delay: i * 0.06,
             ease: "power3.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 85%",
+              start: "top 88%",
             },
           });
         });
@@ -45,138 +44,172 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
   return (
     <section ref={sectionRef} className={styles.section}>
       <div className={styles.container}>
-        {/* ── PROBLEM ── */}
-        <p className={`${styles.eyebrow} ps-reveal`}>The problem</p>
+        {/* ═══════════════════════════════════
+            ROADMAP — one continuous visual journey
+            ═══════════════════════════════════ */}
+        <div className={styles.roadmap}>
 
-        <h2 className={`${styles.headline} ps-reveal`}>
-          Your buyers can&apos;t
-          <br />
-          experience{" "}
-          <span className={styles.headlineRed}>
-            the property from a distance.
-          </span>
-        </h2>
-
-        <p className={`${styles.context} ps-reveal`}>
-          An international buyer can see the photos. Read the listing.
-          Watch a video. But they still haven&apos;t{" "}
-          <em>experienced</em> the property.
-        </p>
-
-        {/* ── VISUAL PATHWAY: Problem → Insight → Solution ── */}
-        <div className={styles.pathway}>
-          {/* Compact problem flow */}
-          <div className={`${styles.flowSteps} ps-reveal`}>
-            <span className={styles.flowStep}>Photos</span>
-            <span className={styles.flowArrow}>→</span>
-            <span className={styles.flowStep}>Listing</span>
-            <span className={styles.flowArrow}>→</span>
-            <span className={styles.flowStep}>Video</span>
-            <span className={styles.flowArrow}>→</span>
-            <span className={`${styles.flowStep} ${styles.flowStepFade}`}>
-              No experience
-            </span>
+          {/* ── STOP 1: THE PROBLEM ── */}
+          <div className={`${styles.stop} ${styles.stopProblem} ps-reveal`}>
+            <h2 className={styles.problemHeading}>The Problem</h2>
           </div>
 
-          {/* Curved dashed pathway SVG */}
+          {/* ── PATH SEGMENT 1: Problem → Fact ── */}
           <svg
-            className={`${styles.pathwaySvg} ps-reveal`}
-            viewBox="0 0 300 120"
+            className={styles.pathSegment}
+            viewBox="0 0 300 100"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
-            preserveAspectRatio="xMidYMid meet"
+            preserveAspectRatio="none"
           >
             <path
-              d="M30 10 C80 10, 100 50, 150 60 S220 80, 270 110"
-              stroke="rgba(255,255,255,0.08)"
+              d="M40 8 C60 8, 80 30, 120 42 S180 70, 220 78 S260 90, 280 92"
+              stroke="rgba(255,255,255,0.12)"
               strokeWidth="1.5"
-              strokeDasharray="6 4"
+              strokeDasharray="8 5"
               strokeLinecap="round"
               fill="none"
             />
-            {/* Red accent dot at midpoint */}
-            <circle cx="150" cy="60" r="4" fill="var(--red)" opacity="0.7" />
-            {/* Arrow at end */}
+            {/* small arrowhead at end */}
             <path
-              d="M262 104L271 111L264 116"
-              stroke="var(--red)"
-              strokeWidth="1.5"
+              d="M274 86L281 93L276 98"
+              stroke="rgba(255,255,255,0.18)"
+              strokeWidth="1.3"
               strokeLinecap="round"
               fill="none"
-              opacity="0.6"
             />
           </svg>
 
-          {/* Key fact / insight */}
-          <div className={`${styles.insightCard} ps-reveal`}>
-            <p className={styles.insightText}>
+          {/* ── STOP 2: UAE FACT ── */}
+          <div className={`${styles.stop} ${styles.stopFact} ps-reveal`}>
+            <p className={styles.factText}>
               UAE is the world&apos;s highest country with the most number of
               international buyers.
             </p>
-            {/* Red scribble double underline */}
-            <svg
-              className={styles.scribbleDouble}
-              viewBox="0 0 240 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M4 3C20 7 40 2 60 5C80 8 100 3 120 6C140 3 160 7 180 4C200 7 220 3 236 5"
-                stroke="var(--red)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                fill="none"
-              />
-              <path
-                d="M4 8C20 11 40 7 60 10C80 12 100 7 120 10C140 7 160 11 180 8C200 11 220 7 236 9"
-                stroke="var(--red)"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-                fill="none"
-                opacity="0.5"
-              />
-            </svg>
-            <span className={styles.insightSource}>
-              Market insight · Prototype data
-            </span>
-          </div>
-        </div>
-
-        {/* ── SOLUTION ── */}
-        <div className={`${styles.solutionBlock} ps-reveal`}>
-          <p className={styles.eyebrow}>The solution</p>
-
-          <h3 className={styles.solutionHeadline}>
-            We make it possible for anyone to actually experience your
-            property from{" "}
-            <span className={styles.solutionHighlight}>
-              anywhere in the world.
+            <div className={styles.factDate}>
+              <span className={styles.dateText}>As of 2026</span>
+              {/* Red hand-drawn double underline */}
               <svg
-                className={styles.scribbleSolution}
-                viewBox="0 0 260 12"
+                className={styles.dateUnderline}
+                viewBox="0 0 90 10"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
                 preserveAspectRatio="none"
               >
                 <path
-                  d="M4 5C25 9 50 3 75 6C100 9 125 3 150 6C175 3 200 8 225 5C240 3 250 7 256 6"
+                  d="M4 3C12 5 24 2 36 4C48 6 60 3 72 5C80 3 86 4 88 3"
                   stroke="var(--red)"
-                  strokeWidth="2"
+                  strokeWidth="1.6"
                   strokeLinecap="round"
                   fill="none"
                 />
+                <path
+                  d="M4 7C14 9 28 6 40 8C52 9 64 6 76 8C82 7 86 8 88 7"
+                  stroke="var(--red)"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  fill="none"
+                  opacity="0.55"
+                />
               </svg>
-            </span>
-          </h3>
+            </div>
+          </div>
 
-          <p className={styles.solutionSub}>
-            A buyer can sit at home in another country and experience your
-            property even before they visit.
-          </p>
+          {/* ── PATH SEGMENT 2: Fact → Consequence ── */}
+          <svg
+            className={`${styles.pathSegment} ${styles.pathReverse}`}
+            viewBox="0 0 300 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M260 8 C240 8, 220 28, 180 44 S120 68, 80 78 S50 88, 30 92"
+              stroke="rgba(255,255,255,0.12)"
+              strokeWidth="1.5"
+              strokeDasharray="8 5"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <path
+              d="M36 86L29 93L34 98"
+              stroke="rgba(255,255,255,0.18)"
+              strokeWidth="1.3"
+              strokeLinecap="round"
+              fill="none"
+            />
+          </svg>
+
+          {/* ── STOP 3: THE CONSEQUENCE ── */}
+          <div className={`${styles.stop} ${styles.stopConsequence} ps-reveal`}>
+            <p className={styles.consequenceText}>
+              But these buyers don&apos;t move faster from photos, videos, and
+              a listing{" "}
+              <span className={styles.consequenceEmphasis}>alone.</span>
+            </p>
+          </div>
+
+          {/* ── PATH SEGMENT 3: Consequence → Solution ── */}
+          <svg
+            className={styles.pathSegment}
+            viewBox="0 0 300 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M40 8 C70 12, 100 38, 140 52 S200 74, 240 82 S270 90, 280 92"
+              stroke="rgba(255,255,255,0.12)"
+              strokeWidth="1.5"
+              strokeDasharray="8 5"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <path
+              d="M274 86L281 93L276 98"
+              stroke="rgba(255,255,255,0.18)"
+              strokeWidth="1.3"
+              strokeLinecap="round"
+              fill="none"
+            />
+          </svg>
+
+          {/* ── STOP 4: THE SOLUTION ── */}
+          <div className={`${styles.stop} ${styles.stopSolution} ps-reveal`}>
+            <p className={styles.solutionEyebrow}>The Solution</p>
+            <h3 className={styles.solutionHeadline}>
+              We made it possible for anyone to actually experience your
+              property from{" "}
+              <span className={styles.solutionHighlight}>
+                anywhere in the world.
+                {/* Straight red hand-drawn underline */}
+                <svg
+                  className={styles.straightUnderline}
+                  viewBox="0 0 220 6"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M4 3C30 4 60 2 90 3.5C120 2.5 150 4 180 3C200 3.5 210 2.8 218 3"
+                    stroke="var(--red)"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                </svg>
+              </span>
+            </h3>
+            <p className={styles.solutionSub}>
+              A buyer can sit at home in another country and experience your
+              property even before they visit.
+            </p>
+          </div>
         </div>
       </div>
     </section>

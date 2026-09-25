@@ -47,10 +47,10 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
 
         gsap.from(".founder-note", {
           opacity: 0,
-          scale: 0.85,
-          rotate: -5,
+          scale: 0.88,
+          rotate: -4,
           duration: 0.7,
-          delay: 0.5,
+          delay: 0.55,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -89,43 +89,43 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
               Get In Touch
             </button>
 
-            {/* Founder sticky-note annotation */}
-            <div className={`${styles.stickyNote} founder-note`}>
-              {/* Red hand-drawn arrow pointing toward CTA */}
+            {/* Founder annotation — below CTA on mobile, side on desktop */}
+            <div className={`${styles.founderAnnotation} founder-note`}>
+              {/* Red hand-drawn curved arrow pointing UP toward CTA */}
               <svg
-                className={styles.stickyArrow}
-                viewBox="0 0 60 50"
+                className={styles.founderArrow}
+                viewBox="0 0 80 90"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
               >
+                {/* Curved path from note area upward toward CTA */}
                 <path
-                  d="M50 42C45 25 32 14 12 8"
+                  d="M40 82 C36 60, 28 42, 32 28 S40 14, 42 8"
                   stroke="var(--red)"
                   strokeWidth="1.8"
                   strokeLinecap="round"
                   fill="none"
                 />
+                {/* Arrowhead pointing UP */}
                 <path
-                  d="M18 3L11 8L16 14"
+                  d="M36 14L42 6L48 14"
                   stroke="var(--red)"
                   strokeWidth="1.8"
                   strokeLinecap="round"
+                  strokeLinejoin="round"
                   fill="none"
                 />
               </svg>
 
-              <div className={styles.stickyCard}>
-                <p className={styles.stickyText}>
-                  Taking on a small number of new
-                  <br />
-                  properties this month. If you&apos;re serious
-                  <br />
-                  about showing yours differently,
-                  <br />
+              {/* The note card */}
+              <div className={styles.noteCard}>
+                <p className={styles.noteText}>
+                  Taking on a small number of new properties this month.
+                  If you&apos;re serious about showing yours differently,
                   let&apos;s talk.
                 </p>
-                <span className={styles.stickySignature}>
+                <span className={styles.noteSignature}>
                   — the founder :)
                 </span>
               </div>
