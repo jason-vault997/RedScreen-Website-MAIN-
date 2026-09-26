@@ -4,6 +4,7 @@ import Hero from "@/components/Hero/Hero";
 import Navigation from "@/components/Navigation/Navigation";
 import TrustLogos from "@/components/TrustLogos/TrustLogos";
 import ImmediateProof from "@/components/ImmediateProof/ImmediateProof";
+import ImpactBlock from "@/components/ImpactBlock/ImpactBlock";
 import SameMarketing from "@/components/SameMarketing/SameMarketing";
 import ProofWall from "@/components/ProofWall/ProofWall";
 import CaseStudies from "@/components/CaseStudies/CaseStudies";
@@ -54,6 +55,9 @@ export default function Home() {
 
         {/* 2. TRUSTED BY INDUSTRY LEADERS */}
         <TrustLogos />
+
+        {/* 2.5. IMPACT METRICS — SEE THE IMPACT WE CREATE */}
+        <ImpactBlock />
 
         {/* 3. TESTIMONIALS — Real Results From Real Clients */}
         <ImmediateProof gsapReady={gsapReady} />

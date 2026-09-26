@@ -353,7 +353,8 @@
     justify-content: flex-end;
     align-items: flex-start;
     text-align: left;
-    padding-bottom: clamp(1.2rem, 3vh, 2.5rem);
+    /* Content shifted ~1-1.5cm upward (larger padding pushes flex-end content higher) */
+    padding-bottom: clamp(2.8rem, 5.5vh, 4.5rem);
     max-width: 100%;
   }
 

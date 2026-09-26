@@ -1,7 +1,7 @@
 /* ============================================
    PROOF ROOM — Floating social-proof field
-   Light gray cards on dark environment
-   Matched to design reference
+   3-layer depth system: front / mid / back
+   Matched to Reference D
    ============================================ */
 
 .section {
@@ -20,7 +20,7 @@
 
 /* ── Header ── */
 .header {
-  margin-bottom: clamp(1.5rem, 4vh, 3rem);
+  margin-bottom: clamp(1.2rem, 3vh, 2rem);
   max-width: 600px;
 }
 
@@ -50,26 +50,24 @@
 
 /* ============================================
    FLOATING PROOF FIELD
-   Absolutely-positioned cards in relative container
    ============================================ */
 .proofField {
   position: relative;
   width: 100%;
-  height: clamp(520px, 75vh, 680px);
+  height: clamp(500px, 68vh, 640px);
   overflow: hidden;
   margin-bottom: clamp(2rem, 4vh, 3.5rem);
-  /* Subtle dark gradient overlay at edges */
 }
 
-/* Edge fade masks */
+/* Top + bottom edge fades */
 .proofField::before,
 .proofField::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  height: 50px;
-  z-index: 5;
+  height: 60px;
+  z-index: 10;
   pointer-events: none;
 }
 
@@ -85,101 +83,108 @@
 
 /* ============================================
    PROOF CARD — Instagram-style social comment
-   Light gray/off-white on dark background
+   SIGNIFICANTLY SMALLER than previous implementation
    ============================================ */
 .proofCard {
   position: absolute;
-  width: clamp(220px, 52vw, 280px);
-  background: rgba(248, 246, 243, 0.95);
-  border-radius: 12px;
-  padding: 0.75rem 0.85rem;
+  /* Much smaller cards — matching Reference D proportions */
+  width: clamp(170px, 42vw, 220px);
+  background: rgba(250, 248, 245, 0.94);
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
   box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.25),
-    0 1px 4px rgba(0, 0, 0, 0.15);
+    0 3px 12px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.12);
   will-change: transform;
-  z-index: 2;
 }
 
-/* Front cards — fully visible, sharp */
-.cardFront {
-  z-index: 3;
+/* ── LAYER 1: FOREGROUND — crisp, readable ── */
+.layer_front {
+  z-index: 4;
   opacity: 1;
 }
 
-/* Back cards — faded, blurred, smaller */
-.cardBack {
+/* ── LAYER 2: MIDGROUND ── */
+.layer_mid {
+  z-index: 2;
+  opacity: 0.65;
+  filter: blur(0.5px);
+}
+
+/* ── LAYER 3: BACKGROUND — blurred, faded, smaller ── */
+.layer_back {
   z-index: 1;
-  opacity: 0.45;
-  filter: blur(1.5px);
+  opacity: 0.35;
+  filter: blur(1.8px);
   transform-origin: center center;
 }
 
-/* ── Card header: avatar + username + verified + time + IG icon ── */
+/* ── Card header ── */
 .pcHeader {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 0.45rem;
+  gap: 0.3rem;
+  margin-bottom: 0.35rem;
 }
 
 .pcAvatar {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
 }
 
-.pcUsername {
-  font-size: 0.72rem;
+.pcName {
+  font-size: 0.62rem;
   font-weight: 600;
   color: #1a1a1a;
   letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 120px;
+  max-width: 95px;
 }
 
-.verifiedBadge {
+.badge {
   flex-shrink: 0;
-  margin-left: -2px;
+  margin-left: -1px;
 }
 
 .pcTime {
-  font-size: 0.6rem;
-  color: #888;
+  font-size: 0.52rem;
+  color: #999;
   margin-left: auto;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .igIcon {
-  color: #888;
+  color: #999;
   flex-shrink: 0;
-  margin-left: 0.15rem;
+  margin-left: 0.1rem;
 }
 
-/* ── Card message text ── */
-.pcText {
-  font-size: 0.72rem;
+/* ── Card message ── */
+.pcMsg {
+  font-size: 0.6rem;
   font-weight: 400;
   color: #2a2a2a;
-  line-height: 1.5;
-  /* Limit to ~4 lines */
+  line-height: 1.45;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.pcHighlight {
+.pcRed {
   color: var(--red);
   font-weight: 600;
+  font-style: italic;
 }
 
 /* ============================================
-   PROOF DASHBOARD — below floating field
+   DASHBOARD
    ============================================ */
 .dashboardWrap {
   position: relative;
@@ -187,28 +192,26 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow:
-    0 24px 64px rgba(0, 0, 0, 0.5),
-    0 8px 24px rgba(0, 0, 0, 0.3);
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Subtle top-edge integration fade */
 .dashboardWrap::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 30px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), transparent);
+  height: 25px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
   z-index: 1;
   pointer-events: none;
 }
 
-.dashboardImage {
+.dashImage {
   display: block;
   width: 100%;
   height: auto;
-  object-fit: cover;
 }
 
 /* ============================================
@@ -216,67 +219,62 @@
    ============================================ */
 @media (max-width: 768px) {
   .proofField {
-    height: clamp(480px, 70vh, 600px);
+    height: clamp(460px, 65vh, 560px);
   }
 
   .proofCard {
-    width: clamp(200px, 55vw, 250px);
-    padding: 0.65rem 0.75rem;
-    border-radius: 10px;
+    width: clamp(155px, 42vw, 195px);
+    padding: 0.5rem 0.55rem;
+    border-radius: 8px;
   }
 
   .pcAvatar {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
-  .pcUsername {
-    font-size: 0.66rem;
-    max-width: 100px;
+  .pcName {
+    font-size: 0.56rem;
+    max-width: 80px;
   }
 
-  .pcText {
-    font-size: 0.66rem;
-    -webkit-line-clamp: 4;
+  .pcMsg {
+    font-size: 0.55rem;
+    -webkit-line-clamp: 3;
   }
 
   .pcTime {
-    font-size: 0.55rem;
+    font-size: 0.48rem;
   }
 }
 
 /* ============================================
-   DESKTOP — wider field, larger cards
+   DESKTOP
    ============================================ */
 @media (min-width: 769px) {
   .proofField {
-    height: clamp(560px, 70vh, 720px);
+    height: clamp(540px, 65vh, 700px);
   }
 
   .proofCard {
-    width: clamp(260px, 22vw, 300px);
-    padding: 0.85rem 1rem;
-    border-radius: 14px;
+    width: clamp(200px, 18vw, 260px);
+    padding: 0.65rem 0.75rem;
+    border-radius: 12px;
   }
 
   .pcAvatar {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
   }
 
-  .pcUsername {
-    font-size: 0.76rem;
-    max-width: 140px;
+  .pcName {
+    font-size: 0.66rem;
+    max-width: 120px;
   }
 
-  .pcText {
-    font-size: 0.76rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .proofCard {
-    width: clamp(280px, 20vw, 320px);
+  .pcMsg {
+    font-size: 0.64rem;
+    -webkit-line-clamp: 5;
   }
 }
 

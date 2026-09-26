@@ -95,7 +95,9 @@
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .section {
-    padding: clamp(1rem, 2vh, 2rem) 0;
+    /* Slightly more top padding for breathing room below hero */
+    padding: clamp(1.4rem, 2.5vh, 2.2rem) 0;
+    padding-top: clamp(1.8rem, 3vh, 2.5rem);
   }
 
   .heading {

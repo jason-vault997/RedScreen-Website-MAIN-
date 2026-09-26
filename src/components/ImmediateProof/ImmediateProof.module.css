@@ -28,10 +28,11 @@
 }
 
 .heading {
-  font-size: var(--text-display);
-  font-weight: var(--weight-black);
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
+  /* Reduced from --text-display to prevent competing with impact metrics */
+  font-size: clamp(1.3rem, 5vw, 1.8rem);
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.02em;
+  text-transform: none;
   color: var(--white);
   max-width: 700px;
 }
