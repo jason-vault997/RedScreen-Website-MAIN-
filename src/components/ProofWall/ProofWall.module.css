@@ -1,6 +1,7 @@
 /* ============================================
-   PROOF WALL — Social-proof comment stream + dashboard visual
-   Light gray comment surfaces on dark background
+   PROOF ROOM — Floating social-proof field
+   Light gray cards on dark environment
+   Matched to design reference
    ============================================ */
 
 .section {
@@ -19,7 +20,7 @@
 
 /* ── Header ── */
 .header {
-  margin-bottom: clamp(2rem, 5vh, 4rem);
+  margin-bottom: clamp(1.5rem, 4vh, 3rem);
   max-width: 600px;
 }
 
@@ -48,189 +49,240 @@
 }
 
 /* ============================================
-   FLOWING MESSAGE STREAM
+   FLOATING PROOF FIELD
+   Absolutely-positioned cards in relative container
    ============================================ */
-.streamContainer {
+.proofField {
   position: relative;
-  height: clamp(360px, 52vh, 460px);
+  width: 100%;
+  height: clamp(520px, 75vh, 680px);
   overflow: hidden;
-  margin-bottom: clamp(2.5rem, 5vh, 4rem);
+  margin-bottom: clamp(2rem, 4vh, 3.5rem);
+  /* Subtle dark gradient overlay at edges */
 }
 
-/* Fade masks — black → transparent for top/bottom */
-.streamFadeTop,
-.streamFadeBottom {
+/* Edge fade masks */
+.proofField::before,
+.proofField::after {
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
-  height: 70px;
-  z-index: 2;
+  height: 50px;
+  z-index: 5;
   pointer-events: none;
 }
 
-.streamFadeTop {
+.proofField::before {
   top: 0;
-  background: linear-gradient(to bottom, var(--black) 0%, transparent 100%);
+  background: linear-gradient(to bottom, var(--black), transparent);
 }
 
-.streamFadeBottom {
+.proofField::after {
   bottom: 0;
-  background: linear-gradient(to top, var(--black) 0%, transparent 100%);
-}
-
-/* Animated track — continuous upward scroll */
-.streamTrack {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  animation: streamScroll 55s linear infinite;
-}
-
-@keyframes streamScroll {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
+  background: linear-gradient(to top, var(--black), transparent);
 }
 
 /* ============================================
-   MESSAGE CARD — Social comment style
-   Light gray surface, rounded, soft shadow
+   PROOF CARD — Instagram-style social comment
+   Light gray/off-white on dark background
    ============================================ */
-.msgCard {
-  /* Light gray social-comment surface */
-  background: rgba(240, 238, 235, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+.proofCard {
+  position: absolute;
+  width: clamp(220px, 52vw, 280px);
+  background: rgba(248, 246, 243, 0.95);
   border-radius: 12px;
-  padding: clamp(1rem, 3.5vw, 1.4rem);
-  flex-shrink: 0;
-  /* Soft elevation */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition:
-    background var(--duration-normal) var(--ease-out),
-    border-color var(--duration-normal) var(--ease-out);
+  padding: 0.75rem 0.85rem;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    0 1px 4px rgba(0, 0, 0, 0.15);
+  will-change: transform;
+  z-index: 2;
 }
 
-.msgCard:hover {
-  background: rgba(240, 238, 235, 0.1);
-  border-color: rgba(255, 255, 255, 0.1);
+/* Front cards — fully visible, sharp */
+.cardFront {
+  z-index: 3;
+  opacity: 1;
 }
 
-.msgText {
-  font-size: clamp(0.86rem, 3vw, 0.94rem);
-  color: var(--grey-200);
-  line-height: 1.65;
-  margin-bottom: 0.9rem;
+/* Back cards — faded, blurred, smaller */
+.cardBack {
+  z-index: 1;
+  opacity: 0.45;
+  filter: blur(1.5px);
+  transform-origin: center center;
 }
 
-.msgHighlight {
-  color: var(--red);
-  font-weight: var(--weight-medium);
-}
-
-/* ── Author row ── social comment metadata */
-.msgAuthor {
+/* ── Card header: avatar + username + verified + time + IG icon ── */
+.pcHeader {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.35rem;
+  margin-bottom: 0.45rem;
 }
 
-/* Initials avatar — rounded, warm tones */
-.avatar {
-  width: 30px;
-  height: 30px;
+.pcAvatar {
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  object-fit: cover;
   flex-shrink: 0;
 }
 
-.avatarInitials {
-  font-size: 0.5rem;
-  font-weight: var(--weight-bold);
-  color: rgba(255, 255, 255, 0.88);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.pcUsername {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
 }
 
-.authorName {
-  display: block;
-  font-size: 0.78rem;
-  font-weight: var(--weight-semibold);
-  color: var(--white-muted);
-  line-height: 1.3;
+.verifiedBadge {
+  flex-shrink: 0;
+  margin-left: -2px;
 }
 
-.authorRole {
-  display: block;
-  font-size: 0.65rem;
-  color: var(--grey-500);
-  line-height: 1.3;
+.pcTime {
+  font-size: 0.6rem;
+  color: #888;
+  margin-left: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.igIcon {
+  color: #888;
+  flex-shrink: 0;
+  margin-left: 0.15rem;
+}
+
+/* ── Card message text ── */
+.pcText {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: #2a2a2a;
+  line-height: 1.5;
+  /* Limit to ~4 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pcHighlight {
+  color: var(--red);
+  font-weight: 600;
 }
 
 /* ============================================
-   PROOF DASHBOARD VISUAL
-   Integrated into dark environment
+   PROOF DASHBOARD — below floating field
    ============================================ */
-.proofVisual {
+.dashboardWrap {
   position: relative;
   border-radius: 10px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow:
     0 24px 64px rgba(0, 0, 0, 0.5),
     0 8px 24px rgba(0, 0, 0, 0.3);
-  /* Subtle border to separate from pure black */
-  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-/* Fade the top edge of the dashboard into the surrounding black */
-.proofVisual::before {
+/* Subtle top-edge integration fade */
+.dashboardWrap::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 40px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), transparent);
+  height: 30px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), transparent);
   z-index: 1;
   pointer-events: none;
 }
 
-.proofImage {
+.dashboardImage {
   display: block;
   width: 100%;
   height: auto;
   object-fit: cover;
 }
 
-/* ── Desktop ── */
-@media (min-width: 769px) {
-  .streamContainer {
-    height: clamp(420px, 58vh, 540px);
+/* ============================================
+   MOBILE
+   ============================================ */
+@media (max-width: 768px) {
+  .proofField {
+    height: clamp(480px, 70vh, 600px);
   }
 
-  .msgCard {
-    max-width: 560px;
-    border-radius: 14px;
+  .proofCard {
+    width: clamp(200px, 55vw, 250px);
+    padding: 0.65rem 0.75rem;
+    border-radius: 10px;
+  }
+
+  .pcAvatar {
+    width: 24px;
+    height: 24px;
+  }
+
+  .pcUsername {
+    font-size: 0.66rem;
+    max-width: 100px;
+  }
+
+  .pcText {
+    font-size: 0.66rem;
+    -webkit-line-clamp: 4;
+  }
+
+  .pcTime {
+    font-size: 0.55rem;
   }
 }
 
-@media (min-width: 1024px) {
-  .msgCard {
-    max-width: 540px;
+/* ============================================
+   DESKTOP — wider field, larger cards
+   ============================================ */
+@media (min-width: 769px) {
+  .proofField {
+    height: clamp(560px, 70vh, 720px);
   }
 
-  .proofVisual {
+  .proofCard {
+    width: clamp(260px, 22vw, 300px);
+    padding: 0.85rem 1rem;
     border-radius: 14px;
+  }
+
+  .pcAvatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .pcUsername {
+    font-size: 0.76rem;
+    max-width: 140px;
+  }
+
+  .pcText {
+    font-size: 0.76rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .proofCard {
+    width: clamp(280px, 20vw, 320px);
   }
 }
 
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .streamTrack {
-    animation: none;
+  .proofCard {
+    will-change: auto;
   }
 }

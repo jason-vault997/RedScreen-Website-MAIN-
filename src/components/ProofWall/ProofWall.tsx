@@ -9,117 +9,208 @@ interface ProofWallProps {
 }
 
 /* ─────────────────────────────────────────
-   10 FICTIONAL PROTOTYPE MESSAGES
-   ─────────────────────────────────────────
-   These are temporary placeholder testimonials.
-   Replace this array with real client messages later.
-   All names are fictional. No real people are represented. */
+   SUPPLIED TESTIMONIAL DATA
+   From user-provided reference material.
+   Usernames are preserved exactly.
+   Portraits are synthetic/non-identifiable.
+   ───────────────────────────────────────── */
 
-const messages = [
+const testimonials = [
   {
-    id: 1,
-    name: "Arjun Mehta",
-    role: "Property Developer · Mumbai",
-    initials: "AM",
-    color: "#6B4C3B",
-    message:
-      "Honestly, this made the property feel way more real than the normal walkthrough we were using. Buyers started asking questions we normally only get after a site visit.",
-    highlight: "way more real than the normal walkthrough",
+    id: "alex",
+    username: "alex.harrington.ae",
+    avatar: "/images/proof/avatars/alex_harrington.webp",
+    verified: true,
+    time: "3h",
+    text: "The 3D walkthrough completely changed how our international buyers view the property. We've had ",
+    highlight: "4 serious offers",
+    textAfter: " in the first month. 🔥",
+    layer: "front" as const,
+    x: 28,
+    y: 15,
+    rotate: 2,
   },
   {
-    id: 2,
-    name: "Sarah Thompson",
-    role: "Real Estate Agent · Sydney",
-    initials: "ST",
-    color: "#3B5B6B",
-    message:
-      "I had buyers in another country asking questions we normally get only after a site visit. That's never happened before with just a listing.",
-    highlight: "asking questions we normally get only after a site visit",
+    id: "james",
+    username: "jameswilsonre",
+    avatar: "/images/proof/avatars/james_wilson.webp",
+    verified: true,
+    time: "1d",
+    text: "Incredible work. Our enquiries from overseas have ",
+    highlight: "increased massively",
+    textAfter: " since the site went live.",
+    layer: "front" as const,
+    x: 2,
+    y: 32,
+    rotate: -3,
   },
   {
-    id: 3,
-    name: "Hassan Al-Rashid",
-    role: "Investment Advisor · Dubai",
-    initials: "HR",
-    color: "#5B3B6B",
-    message:
-      "This is the first time I felt like someone could actually understand the property without standing inside it. My clients made decisions faster.",
-    highlight: "understand the property without standing inside it",
+    id: "daniel",
+    username: "daniel.khaaan",
+    avatar: "/images/proof/avatars/daniel_khaan.webp",
+    verified: true,
+    time: "6h",
+    text: "Was skeptical at first, but this actually makes buyers feel like they've been to the property. ",
+    highlight: "Game changer.",
+    textAfter: "",
+    layer: "front" as const,
+    x: 25,
+    y: 48,
+    rotate: 1.5,
   },
   {
-    id: 4,
-    name: "Priya Kapoor",
-    role: "Luxury Brokerage · Delhi",
-    initials: "PK",
-    color: "#6B3B4C",
-    message:
-      "The new experience gave us a much better conversation with serious buyers. Less explaining, more closing.",
-    highlight: "Less explaining, more closing",
+    id: "sarah",
+    username: "sarah.luxeliving",
+    avatar: "/images/proof/avatars/sarah_luxeliving.webp",
+    verified: false,
+    time: "5h",
+    text: "The attention to detail is next level. Our brand finally feels ",
+    highlight: "premium",
+    textAfter: " online. 🙌",
+    layer: "front" as const,
+    x: 55,
+    y: 36,
+    rotate: 3,
   },
   {
-    id: 5,
-    name: "Daniel Whitmore",
-    role: "Property Consultant · Melbourne",
-    initials: "DW",
-    color: "#3B6B5B",
-    message:
-      "You can immediately tell this isn't just another property listing. The quality speaks before you even read the copy.",
-    highlight: "isn't just another property listing",
+    id: "priya",
+    username: "priyamalik.realty",
+    avatar: "/images/proof/avatars/priya_malik.webp",
+    verified: false,
+    time: "8h",
+    text: "Our overseas viewings have ",
+    highlight: "increased by 3x",
+    textAfter: ". The experience is unreal. Clients spend way more time on the site now.",
+    layer: "front" as const,
+    x: 5,
+    y: 62,
+    rotate: -2,
   },
   {
-    id: 6,
-    name: "Aisha Rahman",
-    role: "Sales Director · Abu Dhabi",
-    initials: "AR",
-    color: "#6B5B3B",
-    message:
-      "We showed the experience to three HNI buyers overseas. Two of them booked a viewing within a week. That turnaround time is unheard of for us.",
-    highlight: "Two of them booked a viewing within a week",
+    id: "luke",
+    username: "lukemartin.au",
+    avatar: "/images/proof/avatars/luke_martin.webp",
+    verified: false,
+    time: "12h",
+    text: "Super smooth process and incredible results. The site looks ",
+    highlight: "world class.",
+    textAfter: "",
+    layer: "front" as const,
+    x: 52,
+    y: 58,
+    rotate: 2.5,
   },
   {
-    id: 7,
-    name: "Rohan Desai",
-    role: "Developer · Bangalore",
-    initials: "RD",
-    color: "#4C3B6B",
-    message:
-      "Our existing video tours were getting skipped. This actually held attention. The enquiry quality improved immediately.",
-    highlight: "The enquiry quality improved immediately",
+    id: "natasha",
+    username: "natashawilson.au",
+    avatar: "/images/proof/avatars/natasha_wilson.webp",
+    verified: false,
+    time: "1d",
+    text: "We've received ",
+    highlight: "serious buyers",
+    textAfter: " from the UK and Singapore within days. This is on another level.",
+    layer: "front" as const,
+    x: 20,
+    y: 76,
+    rotate: -1,
+  },
+  /* ── Background / edge cards ── */
+  {
+    id: "matthew",
+    username: "matthew.chen",
+    avatar: "/images/proof/avatars/matthew_chen.webp",
+    verified: false,
+    time: "2d",
+    text: "Clean design, fast and conversion focused. ",
+    highlight: "Exactly what we needed.",
+    textAfter: "",
+    layer: "back" as const,
+    x: -8,
+    y: 10,
+    rotate: -4,
   },
   {
-    id: 8,
-    name: "Chloe Bennett",
-    role: "Marketing Lead · Brisbane",
-    initials: "CB",
-    color: "#3B4C6B",
-    message:
-      "I was sceptical at first, but the feedback from our international leads completely changed my mind. They felt like they'd been to the property.",
-    highlight: "felt like they'd been to the property",
+    id: "oliver",
+    username: "olivergrant",
+    avatar: "/images/proof/avatars/olivergrant.webp",
+    verified: false,
+    time: "2d",
+    text: "Best investment we've made this year for ",
+    highlight: "our brand.",
+    textAfter: "",
+    layer: "back" as const,
+    x: 68,
+    y: 8,
+    rotate: 4,
   },
   {
-    id: 9,
-    name: "Vikram Singh",
-    role: "Portfolio Manager · Pune",
-    initials: "VS",
-    color: "#5B6B3B",
-    message:
-      "The whole process from inquiry to offer shortened. We couldn't figure out why at first — then we realised it was the experience doing the work.",
-    highlight: "the experience doing the work",
+    id: "emma",
+    username: "emma.clarke.re",
+    avatar: "/images/proof/avatars/emma_clarke.webp",
+    verified: false,
+    time: "3d",
+    text: "The walkthrough feels so real. Our clients ",
+    highlight: "in Singapore love it.",
+    textAfter: "",
+    layer: "back" as const,
+    x: -5,
+    y: 82,
+    rotate: -3,
   },
   {
-    id: 10,
-    name: "Maya Fernandes",
-    role: "Broker · Goa",
-    initials: "MF",
-    color: "#6B3B3B",
-    message:
-      "A client in London told me he felt confident enough to make an offer without visiting. That's never happened with a regular listing.",
-    highlight: "make an offer without visiting",
+    id: "raymond",
+    username: "raymondlee.property",
+    avatar: "/images/proof/avatars/raymond_lee.webp",
+    verified: false,
+    time: "3d",
+    text: "More qualified leads and better conversations. ",
+    highlight: "The difference is obvious.",
+    textAfter: "",
+    layer: "back" as const,
+    x: 18,
+    y: 90,
+    rotate: 2,
+  },
+  {
+    id: "chris",
+    username: "chrisnguyen.re",
+    avatar: "/images/proof/avatars/chris_nguyen.webp",
+    verified: false,
+    time: "2d",
+    text: "This has completely ",
+    highlight: "elevated our online",
+    textAfter: " presence. Loving the results.",
+    layer: "back" as const,
+    x: 72,
+    y: 78,
+    rotate: 3,
   },
 ];
 
+/* Instagram icon SVG inline */
+function IgIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className={styles.igIcon}>
+      <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
+    </svg>
+  );
+}
+
+/* Verification badge */
+function VerifiedBadge() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className={styles.verifiedBadge}>
+      <circle cx="12" cy="12" r="10" fill="#1D9BF0" />
+      <path d="M8 12.5L11 15.5L16.5 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function ProofWall({ gsapReady }: ProofWallProps) {
   const sectionRef = useRef<HTMLElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!gsapReady || !sectionRef.current) return;
@@ -132,6 +223,7 @@ export default function ProofWall({ gsapReady }: ProofWallProps) {
       gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
+        // Header reveal
         gsap.from(".evidence-heading", {
           y: 50,
           opacity: 0,
@@ -143,13 +235,51 @@ export default function ProofWall({ gsapReady }: ProofWallProps) {
           },
         });
 
-        gsap.from(".proof-visual", {
+        // Animate floating cards with independent motion
+        const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (!prefersReduced) {
+          gsap.utils.toArray<HTMLElement>(".proof-card").forEach((card) => {
+            const layer = card.dataset.layer;
+            const speed = layer === "back" ? 0.3 : 0.6;
+            const dirX = Math.random() > 0.5 ? 1 : -1;
+            const dirY = Math.random() > 0.5 ? 1 : -1;
+            const rangeX = 8 + Math.random() * 12;
+            const rangeY = 4 + Math.random() * 8;
+
+            // Continuous floating motion
+            gsap.to(card, {
+              x: `+=${dirX * rangeX}`,
+              y: `+=${dirY * rangeY}`,
+              duration: 6 + Math.random() * 4,
+              ease: "sine.inOut",
+              repeat: -1,
+              yoyo: true,
+              delay: Math.random() * 2,
+            });
+
+            // Scroll-driven parallax
+            gsap.to(card, {
+              y: `+=${layer === "back" ? -30 : -15}`,
+              ease: "none",
+              scrollTrigger: {
+                trigger: fieldRef.current,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: speed,
+              },
+            });
+          });
+        }
+
+        // Dashboard reveal
+        gsap.from(".proof-dashboard", {
           y: 40,
           opacity: 0,
           duration: 1,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".proof-visual",
+            trigger: ".proof-dashboard",
             start: "top 80%",
           },
         });
@@ -160,28 +290,10 @@ export default function ProofWall({ gsapReady }: ProofWallProps) {
     return () => ctx?.revert();
   }, [gsapReady]);
 
-  // Render highlighted message text
-  const renderMessage = (msg: string, highlight: string) => {
-    const idx = msg.indexOf(highlight);
-    if (idx === -1) return msg;
-    const before = msg.slice(0, idx);
-    const after = msg.slice(idx + highlight.length);
-    return (
-      <>
-        {before}
-        <span className={styles.msgHighlight}>{highlight}</span>
-        {after}
-      </>
-    );
-  };
-
-  // Duplicate messages for seamless CSS animation loop
-  const streamMessages = [...messages, ...messages];
-
   return (
     <section ref={sectionRef} className={styles.section} id="evidence">
       <div className={styles.container}>
-        {/* Header */}
+        {/* ── Header ── */}
         <div className={styles.header}>
           <p className={`${styles.label} evidence-heading`}>
             Evidence, not adjectives
@@ -195,46 +307,53 @@ export default function ProofWall({ gsapReady }: ProofWallProps) {
           </p>
         </div>
 
-        {/* Flowing message stream */}
-        <div className={styles.streamContainer}>
-          {/* Top/bottom fade masks */}
-          <div className={styles.streamFadeTop} />
-          <div className={styles.streamFadeBottom} />
-
-          <div className={styles.streamTrack}>
-            {streamMessages.map((msg, i) => (
-              <div key={`${msg.id}-${i}`} className={styles.msgCard}>
-                <p className={styles.msgText}>
-                  &ldquo;{renderMessage(msg.message, msg.highlight)}&rdquo;
-                </p>
-                <div className={styles.msgAuthor}>
-                  {/* Initials avatar */}
-                  <div
-                    className={styles.avatar}
-                    style={{ background: msg.color }}
-                  >
-                    <span className={styles.avatarInitials}>
-                      {msg.initials}
-                    </span>
-                  </div>
-                  <div>
-                    <span className={styles.authorName}>{msg.name}</span>
-                    <span className={styles.authorRole}>{msg.role}</span>
-                  </div>
-                </div>
+        {/* ── Floating social proof field ── */}
+        <div ref={fieldRef} className={styles.proofField}>
+          {testimonials.map((t) => (
+            <div
+              key={t.id}
+              className={`${styles.proofCard} ${
+                t.layer === "back" ? styles.cardBack : styles.cardFront
+              } proof-card`}
+              data-layer={t.layer}
+              style={{
+                left: `${t.x}%`,
+                top: `${t.y}%`,
+                transform: `rotate(${t.rotate}deg)`,
+              }}
+            >
+              {/* Card header: avatar + username + verified + time + ig icon */}
+              <div className={styles.pcHeader}>
+                <Image
+                  src={t.avatar}
+                  alt=""
+                  width={32}
+                  height={32}
+                  className={styles.pcAvatar}
+                />
+                <span className={styles.pcUsername}>{t.username}</span>
+                {t.verified && <VerifiedBadge />}
+                <span className={styles.pcTime}>{t.time}</span>
+                <IgIcon />
               </div>
-            ))}
-          </div>
+              {/* Card message */}
+              <p className={styles.pcText}>
+                {t.text}
+                <span className={styles.pcHighlight}>{t.highlight}</span>
+                {t.textAfter}
+              </p>
+            </div>
+          ))}
         </div>
 
-        {/* Proof dashboard visual */}
-        <div className={`${styles.proofVisual} proof-visual`}>
+        {/* ── Proof Dashboard Visual ── */}
+        <div className={`${styles.dashboardWrap} proof-dashboard`}>
           <Image
             src="/images/proof/proof-dashboard.webp"
             alt="Sales dashboard showing closed property deals and buyer engagement metrics"
             width={1200}
             height={700}
-            className={styles.proofImage}
+            className={styles.dashboardImage}
             loading="lazy"
             style={{ width: "100%", height: "auto" }}
           />
