@@ -121,12 +121,11 @@ export default function FinalCTA({ onContactClick, gsapReady }: FinalCTAProps) {
               {/* The note card */}
               <div className={styles.noteCard}>
                 <p className={styles.noteText}>
-                  Taking on a small number of new properties this month.
-                  If you&apos;re serious about showing yours differently,
-                  let&apos;s talk.
+                  If your property looks like every other listing,{" "}
+                  we have a problem.
                 </p>
                 <span className={styles.noteSignature}>
-                  — the founder :)
+                  — The Founder
                 </span>
               </div>
             </div>

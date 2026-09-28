@@ -1,6 +1,7 @@
 /* ============================================
    PROBLEM SECTION — Dark textured roadmap cards
-   Matched precisely to Reference B (image copy 27)
+   MOBILE: supplied design image
+   DESKTOP: existing HTML/CSS cards
    ============================================ */
 
 .section {
@@ -8,6 +9,48 @@
   padding-bottom: var(--space-section);
   background: var(--black);
   border-top: 1px solid var(--black-border);
+}
+
+/* ── MOBILE: show image, hide desktop cards ── */
+.mobileImage {
+  display: block;     /* mobile default: show */
+  width: 100%;
+  line-height: 0;     /* remove any inline gap below image */
+}
+
+.mobileImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.desktopCards {
+  display: none;      /* mobile default: hide */
+}
+
+/* ── DESKTOP: hide image, show cards ── */
+@media (min-width: 769px) {
+  .mobileImage {
+    display: none;
+  }
+  .desktopCards {
+    display: block;
+  }
+  /* Remove the section's top/bottom padding since desktop
+     container handles its own internal spacing */
+  .section {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+  }
+}
+
+/* On mobile, the image has its own internal black space,
+   so reduce section padding to avoid double-spacing */
+@media (max-width: 768px) {
+  .section {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 .container {

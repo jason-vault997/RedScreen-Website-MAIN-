@@ -154,6 +154,10 @@ const LANES: Lane[] = [
   { x: 68, rotate: -4,   tier: "back",  driftX: -7,  durationBase: 20 },
   { x: 12, rotate:  1.5, tier: "mid",   driftX: 6,   durationBase: 14 },
   { x: 48, rotate: -2,   tier: "front", driftX: -3,  durationBase: 12 },
+  // ── 3 additional lanes for denser field ──
+  { x: 30, rotate:  1,   tier: "mid",   driftX: 4,   durationBase: 17 },
+  { x: 54, rotate: -2.5, tier: "back",  driftX: -5,  durationBase: 22 },
+  { x: 74, rotate:  3.5, tier: "front", driftX: -8,  durationBase: 11 },
 ];
 
 /* Inline icons */
