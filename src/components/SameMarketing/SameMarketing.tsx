@@ -7,6 +7,25 @@ interface SameMarketingProps {
   gsapReady: boolean;
 }
 
+/* Reusable social header mock */
+function CardHeader({ lineWidths = [68, 44] }: { lineWidths?: number[] }) {
+  return (
+    <div className={styles.profileHeader}>
+      <div className={styles.avatarCircle}>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="8" r="4.5" fill="rgba(255,255,255,0.25)" />
+          <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="rgba(255,255,255,0.15)" />
+        </svg>
+      </div>
+      <div className={styles.metaLines}>
+        {lineWidths.map((w, i) => (
+          <div key={i} className={styles.metaLine} style={{ width: `${w}%` }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function SameMarketing({ gsapReady }: SameMarketingProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -23,10 +42,10 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
       ctx = gsap.context(() => {
         gsap.utils.toArray<HTMLElement>(".ps-reveal").forEach((el, i) => {
           gsap.from(el, {
-            y: 40,
+            y: 36,
             opacity: 0,
-            duration: 1,
-            delay: i * 0.1,
+            duration: 0.9,
+            delay: i * 0.08,
             ease: "power3.out",
             scrollTrigger: {
               trigger: el,
@@ -44,120 +63,94 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
   return (
     <section ref={sectionRef} className={styles.section}>
       <div className={styles.container}>
+
         {/* ── THE PROBLEM heading ── */}
         <h2 className={`${styles.problemHeading} ps-reveal`}>The Problem</h2>
 
-        {/* ═══════════════════════════════════════════
+        {/* ════════════════════════════════════════
             CARD 1 — FACTUAL REALITY
-            Dark textured card with social header
-            ═══════════════════════════════════════════ */}
+            ════════════════════════════════════════ */}
         <div className={`${styles.card} ${styles.card1} ps-reveal`}>
-          {/* Noise/grain texture overlay */}
-          <div className={styles.cardGrain} aria-hidden="true" />
           <div className={styles.cardInner}>
-            {/* Social profile header */}
-            <div className={styles.profileHeader}>
-              <div className={styles.avatarPlaceholder}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="8" r="4.5" fill="rgba(255,255,255,0.3)" />
-                  <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="rgba(255,255,255,0.2)" />
-                </svg>
-              </div>
-              <div className={styles.metaLines}>
-                <div className={styles.metaLine} style={{ width: "65%" }} />
-                <div className={styles.metaLine} style={{ width: "42%" }} />
-              </div>
-            </div>
+            <CardHeader lineWidths={[62, 40]} />
 
-            {/* Fact text */}
             <p className={styles.factText}>
               UAE is the world&apos;s highest country with the most number of
               international buyers.
             </p>
 
-            {/* AS OF 2026 + red double underline */}
+            {/* AS OF 2026 + hand-drawn red double underline */}
             <div className={styles.dateBlock}>
               <span className={styles.dateText}>AS OF 2026</span>
               <svg
-                className={styles.dateUnderline}
-                viewBox="0 0 90 12"
+                className={styles.dateUnderlineSvg}
+                viewBox="0 0 90 10"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
                 preserveAspectRatio="none"
               >
+                {/* First stroke */}
                 <path
-                  d="M4 3.5C10 5 22 2 34 4.5C46 6 58 3 70 5.5C78 3 85 4.5 87 3.5"
+                  d="M3 3.5C14 5.5 28 2 42 4C56 5.5 70 2.5 84 4C86 3.8 88 3.5 88 3.5"
                   stroke="var(--red)"
                   strokeWidth="1.8"
                   strokeLinecap="round"
                   fill="none"
                 />
+                {/* Second stroke — slightly lower, thinner */}
                 <path
-                  d="M4 8C12 10 26 7 38 9C50 10 62 7 74 9C80 8 85 9 87 8"
+                  d="M3 7C16 9 32 6.5 46 8C60 9 72 7 85 8"
                   stroke="var(--red)"
-                  strokeWidth="1.3"
+                  strokeWidth="1.2"
                   strokeLinecap="round"
                   fill="none"
-                  opacity="0.55"
+                  opacity="0.6"
                 />
               </svg>
             </div>
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════════
-            RED DASHED ROADMAP — Card 1 → Card 2
-            Curves from bottom-center of card 1,
-            swings right, then curves down-left to card 2
-            ═══════════════════════════════════════════ */}
+        {/* ════════════════════════════════════════
+            ROADMAP PATH 1 → 2
+            Curves right then down to card 2
+            ════════════════════════════════════════ */}
         <svg
           className={`${styles.roadmapSvg} ps-reveal`}
-          viewBox="0 0 240 100"
+          viewBox="0 0 200 110"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
           preserveAspectRatio="xMidYMid meet"
         >
           <path
-            d="M70 4 C85 8, 120 18, 145 35 S170 60, 155 78"
+            d="M60 5 C75 12, 110 22, 135 42 C155 58, 158 80, 148 98"
             stroke="var(--red)"
             strokeWidth="1.8"
-            strokeDasharray="9 6"
+            strokeDasharray="8 5.5"
             strokeLinecap="round"
             fill="none"
-            opacity="0.7"
+            opacity="0.72"
           />
           {/* Arrowhead */}
           <path
-            d="M149 72L156 80L163 74"
+            d="M141 93 L149 100 L157 94"
             stroke="var(--red)"
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
             fill="none"
-            opacity="0.7"
+            opacity="0.72"
           />
         </svg>
 
-        {/* ═══════════════════════════════════════════
+        {/* ════════════════════════════════════════
             CARD 2 — THE ACTUAL PROBLEM
-            ═══════════════════════════════════════════ */}
+            ════════════════════════════════════════ */}
         <div className={`${styles.card} ${styles.card2} ps-reveal`}>
-          <div className={styles.cardGrain} aria-hidden="true" />
           <div className={styles.cardInner}>
-            <div className={styles.profileHeader}>
-              <div className={styles.avatarPlaceholder}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="8" r="4.5" fill="rgba(255,255,255,0.3)" />
-                  <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="rgba(255,255,255,0.2)" />
-                </svg>
-              </div>
-              <div className={styles.metaLines}>
-                <div className={styles.metaLine} style={{ width: "58%" }} />
-                <div className={styles.metaLine} style={{ width: "36%" }} />
-              </div>
-            </div>
+            <CardHeader lineWidths={[55, 35]} />
 
             <p className={styles.problemText}>
               But these buyers don&apos;t move faster from photos, videos, and a
@@ -167,88 +160,80 @@ export default function SameMarketing({ gsapReady }: SameMarketingProps) {
           </div>
         </div>
 
-        {/* ═══════════════════════════════════════════
-            RED DASHED ROADMAP — Card 2 → Card 3
-            Curves from bottom of card 2,
-            swings left, then curves down to card 3
-            ═══════════════════════════════════════════ */}
+        {/* ════════════════════════════════════════
+            ROADMAP PATH 2 → 3
+            Curves left then down to card 3
+            ════════════════════════════════════════ */}
         <svg
-          className={`${styles.roadmapSvg} ${styles.roadmapFlip} ps-reveal`}
-          viewBox="0 0 240 100"
+          className={`${styles.roadmapSvg} ps-reveal`}
+          viewBox="0 0 200 110"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
           preserveAspectRatio="xMidYMid meet"
         >
           <path
-            d="M165 4 C150 10, 115 22, 95 38 S75 60, 85 80"
+            d="M140 5 C125 12, 95 22, 75 40 C58 55, 55 78, 65 98"
             stroke="var(--red)"
             strokeWidth="1.8"
-            strokeDasharray="9 6"
+            strokeDasharray="8 5.5"
             strokeLinecap="round"
             fill="none"
-            opacity="0.7"
+            opacity="0.72"
           />
+          {/* Arrowhead */}
           <path
-            d="M79 74L84 82L91 76"
+            d="M58 93 L65 101 L72 94"
             stroke="var(--red)"
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
             fill="none"
-            opacity="0.7"
+            opacity="0.72"
           />
         </svg>
 
-        {/* ═══════════════════════════════════════════
+        {/* ════════════════════════════════════════
             CARD 3 — THE SOLUTION
-            ═══════════════════════════════════════════ */}
+            ════════════════════════════════════════ */}
         <div className={`${styles.card} ${styles.card3} ps-reveal`}>
-          <div className={styles.cardGrain} aria-hidden="true" />
           <div className={styles.cardInner}>
-            <div className={styles.profileHeader}>
-              <div className={styles.avatarPlaceholder}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <circle cx="12" cy="8" r="4.5" fill="rgba(255,255,255,0.3)" />
-                  <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="rgba(255,255,255,0.2)" />
-                </svg>
-              </div>
-              <div className={styles.metaLines}>
-                <div className={styles.metaLine} style={{ width: "52%" }} />
-                <div className={styles.metaLine} style={{ width: "32%" }} />
-              </div>
-            </div>
+            <CardHeader lineWidths={[48, 30]} />
 
             <p className={styles.solutionLabel}>The Solution</p>
+
             <p className={styles.solutionBody}>
               We made it possible for anyone to actually experience your
               property{" "}
               <span className={styles.solutionRedPhrase}>
                 from anywhere in the world.
+                {/* Straight hand-drawn red underline */}
                 <svg
-                  className={styles.phraseUnderline}
-                  viewBox="0 0 220 6"
+                  className={styles.phraseUnderlineSvg}
+                  viewBox="0 0 210 5"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                   preserveAspectRatio="none"
                 >
                   <path
-                    d="M4 3C28 4.5 56 2 84 3.5C112 2 140 4.5 168 3C196 3.5 210 2.5 218 3"
+                    d="M3 2.5C30 3.5 60 2 90 2.8C120 2 150 3.2 178 2.5C190 2.8 205 2.5 208 2.5"
                     stroke="var(--red)"
-                    strokeWidth="2"
+                    strokeWidth="2.2"
                     strokeLinecap="round"
                     fill="none"
                   />
                 </svg>
               </span>
             </p>
+
             <p className={styles.solutionCaption}>
               A buyer can sit at home in another country and experience your
               property even before they visit.
             </p>
           </div>
         </div>
+
       </div>
     </section>
   );

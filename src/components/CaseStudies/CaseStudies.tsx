@@ -1,39 +1,64 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import styles from "./CaseStudies.module.css";
 
 interface CaseStudiesProps {
   gsapReady: boolean;
 }
 
-const cases = [
+interface CaseStudy {
+  id: number;
+  property: string;
+  location: string;
+  value: string | null;
+  problem: string;
+  experience: string;
+  result: string | null; // null = omit the result field entirely
+  image: string;
+  imageAlt: string;
+}
+
+const cases: CaseStudy[] = [
   {
     id: 1,
-    property: "[PROPERTY NAME]",
-    location: "[LOCATION]",
-    value: "[PROPERTY VALUE]",
-    problem: "[The challenge this property faced in the market]",
-    experience: "[The immersive experience RedScreen created]",
-    result: "[REAL OUTCOME]",
+    property: "Emaar Beachfront",
+    location: "Dubai Harbour, Dubai",
+    value: null, // off-plan, no fixed price shown
+    problem:
+      "An off-plan luxury development on a private island at Dubai Harbour — buyers from overseas needed to understand the premium lifestyle, location, and views before they could commit to a property they'd never physically seen.",
+    experience:
+      "An immersive VR experience designed to let buyers fully visualize the development, surrounding amenities, and waterfront lifestyle — before they visit.",
+    result: null, // project still in progress — field removed
+    image: "/images/cases/emaar-beachfront.webp",
+    imageAlt: "Emaar Beachfront aerial view, Dubai Harbour",
   },
   {
     id: 2,
-    property: "[PROPERTY NAME]",
-    location: "[LOCATION]",
-    value: "[PROPERTY VALUE]",
-    problem: "[The challenge this property faced in the market]",
-    experience: "[The immersive experience RedScreen created]",
-    result: "[REAL OUTCOME]",
+    property: "Lodha Altamount",
+    location: "South Mumbai",
+    value: "$3.4M",
+    problem:
+      "Presiding over South Mumbai from the highest point of Altamount Road, Lodha Altamount required a digital experience that could communicate its extraordinary privacy, panoramic views of the Arabian Sea, and ultra-premium positioning to international buyers who couldn't easily visit.",
+    experience:
+      "A cinematic immersive experience capturing the 270° panoramic views across Haji Ali, the Queen's Necklace, the Arabian Sea, and the Mumbai skyline — letting buyers feel the elevation and exclusivity before stepping foot on site.",
+    result: null,
+    image: "/images/cases/lodha-altamount.webp",
+    imageAlt: "Lodha Altamount luxury tower, South Mumbai",
   },
   {
     id: 3,
-    property: "[PROPERTY NAME]",
-    location: "[LOCATION]",
-    value: "[PROPERTY VALUE]",
-    problem: "[The challenge this property faced in the market]",
-    experience: "[The immersive experience RedScreen created]",
-    result: "[REAL OUTCOME]",
+    property: "Orient Grand",
+    location: "Bandra",
+    value: null,
+    problem:
+      "A pre-launch G+24 uber-luxury development in Bandra with world-class fixtures, technology integration, and premium lifestyle amenities — the challenge was helping buyers experience the vision of the project before construction completed.",
+    experience:
+      "A comprehensive digital experience showcasing the architectural design, international-standard finishes, gated community lifestyle, and premium amenities — giving buyers a complete picture of the living experience they were investing in.",
+    result: null,
+    image: "/images/cases/orient-grand.webp",
+    imageAlt: "Orient Grand luxury development, Bandra",
   },
 ];
 
@@ -42,8 +67,7 @@ export default function CaseStudies({ gsapReady }: CaseStudiesProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // For infinite loop: duplicate the cards array (3 sets: original + clone + clone)
-  // We place 3 copies so we can seamlessly reset scroll position
+  // For infinite loop: duplicate the cards array (3 sets)
   const loopedCases = [...cases, ...cases, ...cases];
   const totalOriginal = cases.length;
 
@@ -78,11 +102,9 @@ export default function CaseStudies({ gsapReady }: CaseStudiesProps) {
           }
         });
 
-        // Map back to original index
         setActiveIndex(closestIndex % totalOriginal);
 
-        // Infinite loop: if we've scrolled into the 3rd set, jump back to 2nd set
-        // If we're in the 1st set, jump forward to 2nd set
+        // Infinite loop reset
         if (closestIndex >= totalOriginal * 2) {
           const targetIndex = closestIndex - totalOriginal;
           const targetCard = cards[targetIndex];
@@ -112,7 +134,7 @@ export default function CaseStudies({ gsapReady }: CaseStudiesProps) {
     };
   }, [totalOriginal]);
 
-  // On mount: scroll to the middle set so infinite loop works in both directions
+  // On mount: scroll to the middle set
   useEffect(() => {
     const carousel = carouselRef.current;
     if (!carousel) return;
@@ -122,7 +144,7 @@ export default function CaseStudies({ gsapReady }: CaseStudiesProps) {
         `.${styles.caseCard}`
       );
       if (cards.length > totalOriginal) {
-        const targetCard = cards[totalOriginal]; // first card of middle set
+        const targetCard = cards[totalOriginal];
         if (targetCard) {
           carousel.scrollTo({
             left: targetCard.offsetLeft - carousel.offsetLeft,
@@ -171,13 +193,10 @@ export default function CaseStudies({ gsapReady }: CaseStudiesProps) {
       const cards = carousel.querySelectorAll<HTMLElement>(
         `.${styles.caseCard}`
       );
-      // Scroll to the middle set's card
       const targetCard = cards[totalOriginal + index];
       if (targetCard) {
         carousel.scrollTo({
-          left:
-            targetCard.offsetLeft -
-            carousel.offsetLeft,
+          left: targetCard.offsetLeft - carousel.offsetLeft,
           behavior: "smooth",
         });
       }
@@ -209,11 +228,17 @@ export default function CaseStudies({ gsapReady }: CaseStudiesProps) {
                 : styles.cardInactive
             }`}
           >
-            {/* Image placeholder */}
+            {/* Property image */}
             <div className={styles.caseMedia}>
-              <div className={styles.mediaPlaceholder}>
-                <span className={styles.mediaLabel}>PROPERTY VISUAL</span>
-              </div>
+              <Image
+                src={c.image}
+                alt={c.imageAlt}
+                fill
+                className={styles.caseImage}
+                style={{ objectFit: "cover", objectPosition: "center" }}
+                sizes="(max-width: 768px) 85vw, 540px"
+                priority={i === totalOriginal} // middle set's first card
+              />
             </div>
 
             {/* Case details */}
@@ -222,8 +247,12 @@ export default function CaseStudies({ gsapReady }: CaseStudiesProps) {
                 <span className={styles.caseProperty}>{c.property}</span>
                 <span className={styles.caseDivider}>·</span>
                 <span className={styles.caseLocation}>{c.location}</span>
-                <span className={styles.caseDivider}>·</span>
-                <span className={styles.caseValue}>{c.value}</span>
+                {c.value && (
+                  <>
+                    <span className={styles.caseDivider}>·</span>
+                    <span className={styles.caseValue}>{c.value}</span>
+                  </>
+                )}
               </div>
 
               <div className={styles.caseFlow}>
@@ -235,12 +264,15 @@ export default function CaseStudies({ gsapReady }: CaseStudiesProps) {
                   <span className={styles.stepLabel}>The experience</span>
                   <p className={styles.stepText}>{c.experience}</p>
                 </div>
-                <div className={styles.caseStep}>
-                  <span className={styles.stepLabel}>The result</span>
-                  <p className={`${styles.stepText} ${styles.resultText}`}>
-                    {c.result}
-                  </p>
-                </div>
+                {/* Only render result if it's provided */}
+                {c.result !== null && (
+                  <div className={styles.caseStep}>
+                    <span className={styles.stepLabel}>The result</span>
+                    <p className={`${styles.stepText} ${styles.resultText}`}>
+                      {c.result}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </article>

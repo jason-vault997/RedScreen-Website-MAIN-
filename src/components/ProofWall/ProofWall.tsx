@@ -9,28 +9,12 @@ interface ProofWallProps {
 }
 
 /* ─────────────────────────────────────────
-   SUPPLIED TESTIMONIALS — real text, exact usernames
-   Portraits from the user-supplied photo sheet (Ref E)
+   TESTIMONIAL POOL
+   Supplied usernames/text preserved exactly.
+   Portraits from supplied Reference E photo sheet.
    ───────────────────────────────────────── */
 
-interface Testimonial {
-  id: string;
-  username: string;
-  avatar: string;
-  verified: boolean;
-  time: string;
-  text: string;
-  highlight: string;
-  textAfter: string;
-  layer: "front" | "mid" | "back";
-  startX: number;   // % from left
-  startY: number;   // % from top (starting position)
-  rotate: number;
-  driftX: number;    // px horizontal drift during rise
-  speed: number;     // multiplier (1 = normal, <1 = slower)
-}
-
-const testimonials: Testimonial[] = [
+const POOL = [
   {
     id: "alex",
     username: "alex.harrington.ae",
@@ -38,14 +22,8 @@ const testimonials: Testimonial[] = [
     verified: true,
     time: "3h",
     text: "The 3D walkthrough completely changed how our international buyers view the property. We've had ",
-    highlight: "4 serious offers",
-    textAfter: " in the first month. 🔥",
-    layer: "front",
-    startX: 22,
-    startY: 20,
-    rotate: 2,
-    driftX: 8,
-    speed: 1,
+    red: "4 serious offers",
+    after: " in the first month. 🔥",
   },
   {
     id: "james",
@@ -54,14 +32,8 @@ const testimonials: Testimonial[] = [
     verified: true,
     time: "1d",
     text: "Incredible work. Our enquiries from overseas have ",
-    highlight: "increased massively",
-    textAfter: " since the site went live.",
-    layer: "front",
-    startX: -2,
-    startY: 32,
-    rotate: -3,
-    driftX: -5,
-    speed: 0.85,
+    red: "increased massively",
+    after: " since the site went live.",
   },
   {
     id: "daniel",
@@ -70,14 +42,8 @@ const testimonials: Testimonial[] = [
     verified: true,
     time: "6h",
     text: "Was skeptical at first, but this actually makes buyers feel like they've been to the property. ",
-    highlight: "Game changer.",
-    textAfter: "",
-    layer: "front",
-    startX: 20,
-    startY: 45,
-    rotate: 1,
-    driftX: 6,
-    speed: 0.92,
+    red: "Game changer.",
+    after: "",
   },
   {
     id: "sarah",
@@ -86,14 +52,8 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "5h",
     text: "The attention to detail is next level. Our brand finally feels ",
-    highlight: "premium",
-    textAfter: " online. 🙌",
-    layer: "front",
-    startX: 52,
-    startY: 33,
-    rotate: 3.5,
-    driftX: -4,
-    speed: 1.1,
+    red: "premium",
+    after: " online. 🙌",
   },
   {
     id: "priya",
@@ -102,14 +62,8 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "8h",
     text: "Our overseas viewings have ",
-    highlight: "increased by 3x",
-    textAfter: ". The experience is unreal.",
-    layer: "front",
-    startX: 2,
-    startY: 58,
-    rotate: -2,
-    driftX: 10,
-    speed: 0.78,
+    red: "increased by 3x",
+    after: ". The experience is unreal.",
   },
   {
     id: "luke",
@@ -118,14 +72,8 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "12h",
     text: "Super smooth process and incredible results. The site looks ",
-    highlight: "world class.",
-    textAfter: "",
-    layer: "front",
-    startX: 48,
-    startY: 56,
-    rotate: 2.5,
-    driftX: -8,
-    speed: 0.95,
+    red: "world class.",
+    after: "",
   },
   {
     id: "natasha",
@@ -134,16 +82,9 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "1d",
     text: "We've received ",
-    highlight: "serious buyers",
-    textAfter: " from the UK and Singapore within days. This is on another level.",
-    layer: "front",
-    startX: 18,
-    startY: 72,
-    rotate: -1.5,
-    driftX: 5,
-    speed: 0.88,
+    red: "serious buyers",
+    after: " from the UK and Singapore within days. This is on another level.",
   },
-  /* ── Background / edge cards ── */
   {
     id: "matthew",
     username: "matthew.chen",
@@ -151,14 +92,8 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "2d",
     text: "Clean design, fast and conversion focused. ",
-    highlight: "Exactly what we needed.",
-    textAfter: "",
-    layer: "back",
-    startX: -10,
-    startY: 8,
-    rotate: -5,
-    driftX: 4,
-    speed: 0.55,
+    red: "Exactly what we needed.",
+    after: "",
   },
   {
     id: "oliver",
@@ -167,14 +102,8 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "2d",
     text: "Best investment we've made this year for ",
-    highlight: "our brand.",
-    textAfter: "",
-    layer: "back",
-    startX: 65,
-    startY: 5,
-    rotate: 4,
-    driftX: -3,
-    speed: 0.5,
+    red: "our brand.",
+    after: "",
   },
   {
     id: "emma",
@@ -183,14 +112,8 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "3d",
     text: "The walkthrough feels so real. Our clients ",
-    highlight: "in Singapore love it.",
-    textAfter: "",
-    layer: "back",
-    startX: -8,
-    startY: 78,
-    rotate: -3,
-    driftX: 6,
-    speed: 0.6,
+    red: "in Singapore love it.",
+    after: "",
   },
   {
     id: "raymond",
@@ -199,14 +122,8 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "3d",
     text: "More qualified leads and better conversations. The ",
-    highlight: "difference is obvious.",
-    textAfter: "",
-    layer: "back",
-    startX: 15,
-    startY: 88,
-    rotate: 2,
-    driftX: -5,
-    speed: 0.65,
+    red: "difference is obvious.",
+    after: "",
   },
   {
     id: "chris",
@@ -215,32 +132,44 @@ const testimonials: Testimonial[] = [
     verified: false,
     time: "2d",
     text: "This has completely ",
-    highlight: "elevated our online",
-    textAfter: " presence. Loving the results.",
-    layer: "back",
-    startX: 68,
-    startY: 75,
-    rotate: 3.5,
-    driftX: -4,
-    speed: 0.58,
+    red: "elevated our online",
+    after: " presence. Loving the results.",
   },
 ];
 
-/* Instagram icon */
+/* Lane definitions: each card gets a lane with fixed x%, angle, scale tier */
+interface Lane {
+  x: number;          // % from left (card left edge)
+  rotate: number;     // rotation in deg
+  tier: "front" | "mid" | "back"; // visual depth
+  driftX: number;     // px of horizontal drift per full animation cycle
+  durationBase: number; // base seconds for one full rise
+}
+
+const LANES: Lane[] = [
+  { x: 5,  rotate: -3.5, tier: "back",  driftX: 8,   durationBase: 18 },
+  { x: 22, rotate:  2,   tier: "front", driftX: 5,   durationBase: 13 },
+  { x: 40, rotate: -1.5, tier: "front", driftX: -6,  durationBase: 15 },
+  { x: 58, rotate:  3,   tier: "mid",   driftX: -4,  durationBase: 16 },
+  { x: 68, rotate: -4,   tier: "back",  driftX: -7,  durationBase: 20 },
+  { x: 12, rotate:  1.5, tier: "mid",   driftX: 6,   durationBase: 14 },
+  { x: 48, rotate: -2,   tier: "front", driftX: -3,  durationBase: 12 },
+];
+
+/* Inline icons */
 function IgIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" className={styles.igIcon}>
-      <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="1.5" />
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className={styles.igIcon}>
+      <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="12" cy="12" r="4.8" stroke="currentColor" strokeWidth="1.6" />
       <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
     </svg>
   );
 }
 
-/* Verified badge */
-function VerifiedBadge() {
+function BadgeIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" className={styles.badge}>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className={styles.badge}>
       <circle cx="12" cy="12" r="10" fill="#1D9BF0" />
       <path d="M8 12.5L11 15.5L16.5 9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -252,19 +181,100 @@ export default function ProofWall({ gsapReady }: ProofWallProps) {
   const fieldRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!gsapReady || !sectionRef.current || !fieldRef.current) return;
+    if (!sectionRef.current || !fieldRef.current) return;
 
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
+
+    let gsapInstance: typeof import("gsap").default | null = null;
+    let ScrollTrigger: typeof import("gsap/ScrollTrigger").ScrollTrigger | null = null;
     let ctx: { revert: () => void } | null = null;
+    let observer: IntersectionObserver | null = null;
+    let animationsStarted = false;
+
+    const startCardAnimations = () => {
+      if (!gsapInstance || animationsStarted || !fieldRef.current) return;
+      animationsStarted = true;
+
+      const cards = fieldRef.current.querySelectorAll<HTMLElement>(".proof-stream-card");
+
+      cards.forEach((card) => {
+        const lane = parseInt(card.dataset.lane || "0", 10);
+        const laneData = LANES[lane % LANES.length];
+        const durationVariance = (Math.random() - 0.5) * 4; // ±2s variance
+        const duration = laneData.durationBase + durationVariance;
+        // Stagger start: some cards start mid-animation for immediate visual activity
+        const initialProgress = parseFloat(card.dataset.initialProgress || "0");
+        // Position: start below visible area, rise through, exit at top
+        const fieldH = fieldRef.current!.offsetHeight;
+
+        const tl = gsapInstance!.timeline({ repeat: -1 });
+
+        // Card height approximately 120px, start from fieldH+20
+        const startY = fieldH + 20;
+        const endY = -160; // above field
+        const totalTravel = startY - endY;
+
+        // For immediately visible cards (mid-stream start), set initial position
+        const startYForCard = startY - totalTravel * initialProgress;
+
+        gsapInstance!.set(card, {
+          y: startYForCard,
+          x: laneData.driftX * initialProgress,
+          opacity: 0,
+          rotation: laneData.rotate,
+        });
+
+        tl.to(card, {
+          y: startY,
+          x: 0,
+          opacity: 0,
+          duration: 0,
+        });
+
+        // Rise from below: fade in as entering
+        tl.to(card, {
+          y: fieldH * 0.7,
+          x: laneData.driftX * 0.4,
+          opacity: laneData.tier === "back" ? 0.38 : laneData.tier === "mid" ? 0.7 : 1,
+          duration: duration * 0.3,
+          ease: "none",
+        });
+
+        // Mid rise: full opacity
+        tl.to(card, {
+          y: fieldH * 0.3,
+          x: laneData.driftX * 0.7,
+          opacity: laneData.tier === "back" ? 0.38 : laneData.tier === "mid" ? 0.7 : 1,
+          duration: duration * 0.35,
+          ease: "none",
+        });
+
+        // Upper fade: dissolve as exiting
+        tl.to(card, {
+          y: endY,
+          x: laneData.driftX,
+          opacity: 0,
+          duration: duration * 0.35,
+          ease: "none",
+        });
+
+        // Use initialProgress to start each card at a different point
+        tl.progress(initialProgress);
+        tl.play();
+      });
+    };
 
     const init = async () => {
-      const { default: gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-      gsap.registerPlugin(ScrollTrigger);
+      const gsapModule = await import("gsap");
+      const { ScrollTrigger: ST } = await import("gsap/ScrollTrigger");
+      gsapInstance = gsapModule.default;
+      ScrollTrigger = ST;
+      gsapInstance.registerPlugin(ScrollTrigger);
 
-      ctx = gsap.context(() => {
-        // Heading reveal
-        gsap.from(".evidence-heading", {
+      ctx = gsapInstance.context(() => {
+        // Header reveal
+        gsapInstance!.from(".evidence-heading", {
           y: 40,
           opacity: 0,
           duration: 1,
@@ -275,31 +285,8 @@ export default function ProofWall({ gsapReady }: ProofWallProps) {
           },
         });
 
-        if (!prefersReduced) {
-          // Each card: independent slow rise + horizontal drift + subtle rotation
-          gsap.utils.toArray<HTMLElement>(".proof-card").forEach((card) => {
-            const speed = parseFloat(card.dataset.speed || "1");
-            const driftX = parseFloat(card.dataset.driftx || "0");
-            const baseRotate = parseFloat(card.dataset.rotate || "0");
-            const duration = 12 + (1 - speed) * 10 + Math.random() * 6;
-            const delay = Math.random() * 4;
-
-            // Primary: slow upward rise
-            gsap.to(card, {
-              y: `-=${45 + Math.random() * 25}`,
-              x: `+=${driftX}`,
-              rotation: baseRotate + (Math.random() > 0.5 ? 1.5 : -1.5),
-              duration,
-              ease: "none",
-              repeat: -1,
-              yoyo: true,
-              delay,
-            });
-          });
-        }
-
         // Dashboard reveal
-        gsap.from(".proof-dashboard", {
+        gsapInstance!.from(".proof-dashboard", {
           y: 40,
           opacity: 0,
           duration: 1,
@@ -310,11 +297,46 @@ export default function ProofWall({ gsapReady }: ProofWallProps) {
           },
         });
       }, sectionRef);
+
+      // PREACTIVATION: Start animations when section is 200px below viewport
+      // so cards are already moving when user arrives
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              startCardAnimations();
+              observer?.disconnect();
+            }
+          });
+        },
+        {
+          // Negative rootMargin: trigger 200px BEFORE the element is in viewport
+          rootMargin: "200px 0px 0px 0px",
+          threshold: 0,
+        }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
     };
 
     init();
-    return () => ctx?.revert();
+
+    return () => {
+      ctx?.revert();
+      observer?.disconnect();
+    };
   }, [gsapReady]);
+
+  // Build cards: each POOL item × LANES length positions
+  // We create one card per lane and cycle through pool
+  const streamCards = LANES.map((lane, laneIdx) => {
+    const poolItem = POOL[laneIdx % POOL.length];
+    // Spread initial progress so cards start at different heights
+    const initialProgress = (laneIdx / LANES.length);
+    return { ...poolItem, ...lane, laneIdx, initialProgress };
+  });
 
   return (
     <section ref={sectionRef} className={styles.section} id="evidence">
@@ -333,46 +355,47 @@ export default function ProofWall({ gsapReady }: ProofWallProps) {
           </p>
         </div>
 
-        {/* ── Floating social proof field ── */}
+        {/* ── Floating social proof stream ── */}
         <div ref={fieldRef} className={styles.proofField}>
-          {/* Top/bottom fade masks via CSS pseudo-elements */}
-          {testimonials.map((t) => (
+          {streamCards.map((c) => (
             <div
-              key={t.id}
-              className={`${styles.proofCard} ${styles[`layer_${t.layer}`]} proof-card`}
-              data-speed={t.speed}
-              data-driftx={t.driftX}
-              data-rotate={t.rotate}
+              key={`${c.id}-${c.laneIdx}`}
+              className={`${styles.proofCard} ${styles[`tier_${c.tier}`]} proof-stream-card`}
+              data-lane={c.laneIdx}
+              data-initial-progress={c.initialProgress.toFixed(3)}
               style={{
-                left: `${t.startX}%`,
-                top: `${t.startY}%`,
-                transform: `rotate(${t.rotate}deg)`,
+                left: `${c.x}%`,
+                top: 0,            /* GSAP controls Y */
+                transform: `rotate(${c.rotate}deg)`,
+                position: "absolute",
               }}
             >
-              <div className={styles.pcHeader}>
+              {/* Header */}
+              <div className={styles.cardHeader}>
                 <Image
-                  src={t.avatar}
+                  src={c.avatar}
                   alt=""
-                  width={36}
-                  height={36}
-                  className={styles.pcAvatar}
+                  width={28}
+                  height={28}
+                  className={styles.cardAvatar}
                 />
-                <span className={styles.pcName}>{t.username}</span>
-                {t.verified && <VerifiedBadge />}
-                <span className={styles.pcTime}>{t.time}</span>
+                <span className={styles.cardName}>{c.username}</span>
+                {c.verified && <BadgeIcon />}
+                <span className={styles.cardTime}>{c.time}</span>
                 <IgIcon />
               </div>
-              <p className={styles.pcMsg}>
-                {t.text}
-                <span className={styles.pcRed}>{t.highlight}</span>
-                {t.textAfter}
+              {/* Message */}
+              <p className={styles.cardMsg}>
+                {c.text}
+                <span className={styles.cardRed}>{c.red}</span>
+                {c.after}
               </p>
             </div>
           ))}
         </div>
 
         {/* ── Proof Dashboard ── */}
-        <div className={`${styles.dashboardWrap} proof-dashboard`}>
+        <div className={`${styles.dashWrap} proof-dashboard`}>
           <Image
             src="/images/proof/proof-dashboard.webp"
             alt="Sales dashboard showing closed property deals and buyer engagement metrics"

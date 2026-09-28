@@ -95,27 +95,28 @@
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .section {
-    /* Slightly more top padding for breathing room below hero */
-    padding: clamp(1.4rem, 2.5vh, 2.2rem) 0;
-    padding-top: clamp(1.8rem, 3vh, 2.5rem);
+    /* Breathing room below hero */
+    padding-top: clamp(2.2rem, 4vh, 3rem);
+    padding-bottom: clamp(1.4rem, 2.5vh, 2rem);
   }
 
   .heading {
     font-size: 0.65rem;
     letter-spacing: 0.15em;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
   }
 
+  /* 1.5× logo size: 39px → 58px */
   .logoItem {
-    height: 39px;
+    height: 58px;
   }
 
   .logoImage {
-    max-height: 39px;
+    max-height: 58px;
   }
 
   .marqueeTrack {
-    gap: 2.5rem;
+    gap: 3rem;
     animation-duration: 35s;
   }
 }

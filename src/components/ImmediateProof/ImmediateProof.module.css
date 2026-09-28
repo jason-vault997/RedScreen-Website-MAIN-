@@ -3,9 +3,11 @@
    ============================================ */
 
 .section {
-  padding-top: var(--space-section);
+  /* Extra top padding creates breathing room after impact metrics */
+  padding-top: clamp(3rem, 7vh, 5rem);
   padding-bottom: var(--space-section);
   background: var(--black);
+  border-top: 1px solid var(--black-border);
 }
 
 .container {
@@ -15,7 +17,7 @@
 }
 
 .intro {
-  margin-bottom: clamp(3rem, 6vh, 5rem);
+  margin-bottom: clamp(2rem, 4vh, 3rem);
 }
 
 .sectionLabel {
@@ -28,13 +30,13 @@
 }
 
 .heading {
-  /* Reduced from --text-display to prevent competing with impact metrics */
-  font-size: clamp(1.3rem, 5vw, 1.8rem);
-  font-weight: var(--weight-bold);
-  letter-spacing: -0.02em;
+  /* Small, restrained — does NOT compete with impact block above */
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.01em;
   text-transform: none;
-  color: var(--white);
-  max-width: 700px;
+  color: var(--grey-200);
+  max-width: 600px;
 }
 
 /* --- Carousel Wrapper (relative for sound control positioning) --- */

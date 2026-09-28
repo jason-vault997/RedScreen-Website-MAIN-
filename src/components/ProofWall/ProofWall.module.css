@@ -1,7 +1,7 @@
 /* ============================================
-   PROOF ROOM — Floating social-proof field
-   3-layer depth system: front / mid / back
-   Matched to Reference D
+   PROOF ROOM — Continuous rising social stream
+   3-tier depth: front / mid / back
+   Matched to Reference D (image copy 26)
    ============================================ */
 
 .section {
@@ -18,9 +18,9 @@
   padding: 0 var(--gutter);
 }
 
-/* ── Header ── */
+/* ── Section header ── */
 .header {
-  margin-bottom: clamp(1.2rem, 3vh, 2rem);
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
   max-width: 600px;
 }
 
@@ -30,7 +30,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--red);
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
 }
 
 .heading {
@@ -39,7 +39,7 @@
   letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--white);
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
 }
 
 .subtext {
@@ -49,135 +49,137 @@
 }
 
 /* ============================================
-   FLOATING PROOF FIELD
+   PROOF FIELD — container for rising cards
+   Overflow hidden clips cards outside bounds
+   Top/bottom masks for smooth entry/exit
    ============================================ */
 .proofField {
   position: relative;
   width: 100%;
-  height: clamp(500px, 68vh, 640px);
+  /* Tall enough to feel like a real field */
+  height: clamp(480px, 65vh, 620px);
   overflow: hidden;
   margin-bottom: clamp(2rem, 4vh, 3.5rem);
 }
 
-/* Top + bottom edge fades */
-.proofField::before,
-.proofField::after {
+/* Top fade — cards dissolve as they exit upward */
+.proofField::before {
   content: "";
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--black) 0%, transparent 100%);
   z-index: 10;
   pointer-events: none;
 }
 
-.proofField::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--black), transparent);
-}
-
+/* Bottom fade — cards emerge from darkness */
 .proofField::after {
+  content: "";
+  position: absolute;
   bottom: 0;
-  background: linear-gradient(to top, var(--black), transparent);
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to top, var(--black) 0%, transparent 100%);
+  z-index: 10;
+  pointer-events: none;
 }
 
 /* ============================================
-   PROOF CARD — Instagram-style social comment
-   SIGNIFICANTLY SMALLER than previous implementation
+   PROOF CARD — Instagram-style social message
+   Light gray / off-white surface
+   SIGNIFICANTLY smaller than previous implementation
    ============================================ */
 .proofCard {
   position: absolute;
-  /* Much smaller cards — matching Reference D proportions */
-  width: clamp(170px, 42vw, 220px);
-  background: rgba(250, 248, 245, 0.94);
+  /* Smaller cards — matching Reference D */
+  width: clamp(150px, 38vw, 210px);
+  background: rgba(252, 250, 248, 0.95);
   border-radius: 10px;
-  padding: 0.55rem 0.65rem;
+  padding: 0.5rem 0.6rem;
   box-shadow:
-    0 3px 12px rgba(0, 0, 0, 0.2),
-    0 1px 3px rgba(0, 0, 0, 0.12);
-  will-change: transform;
+    0 2px 8px rgba(0, 0, 0, 0.18),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+  will-change: transform, opacity;
+  /* Initial state — GSAP takes over */
+  opacity: 0;
 }
 
-/* ── LAYER 1: FOREGROUND — crisp, readable ── */
-.layer_front {
+/* ── Depth tiers ── */
+.tier_front {
   z-index: 4;
-  opacity: 1;
 }
 
-/* ── LAYER 2: MIDGROUND ── */
-.layer_mid {
+.tier_mid {
+  z-index: 3;
+}
+
+.tier_back {
   z-index: 2;
-  opacity: 0.65;
-  filter: blur(0.5px);
-}
-
-/* ── LAYER 3: BACKGROUND — blurred, faded, smaller ── */
-.layer_back {
-  z-index: 1;
-  opacity: 0.35;
-  filter: blur(1.8px);
-  transform-origin: center center;
+  filter: blur(1.5px);
+  /* scale handled by GSAP opacity */
 }
 
 /* ── Card header ── */
-.pcHeader {
+.cardHeader {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  margin-bottom: 0.35rem;
+  gap: 0.28rem;
+  margin-bottom: 0.3rem;
 }
 
-.pcAvatar {
-  width: 24px;
-  height: 24px;
+.cardAvatar {
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
 }
 
-.pcName {
-  font-size: 0.62rem;
+.cardName {
+  font-size: 0.58rem;
   font-weight: 600;
   color: #1a1a1a;
-  letter-spacing: -0.01em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 95px;
+  max-width: 85px;
+  letter-spacing: -0.01em;
 }
 
 .badge {
   flex-shrink: 0;
-  margin-left: -1px;
 }
 
-.pcTime {
-  font-size: 0.52rem;
+.cardTime {
+  font-size: 0.5rem;
   color: #999;
   margin-left: auto;
-  white-space: nowrap;
   flex-shrink: 0;
 }
 
 .igIcon {
-  color: #999;
+  color: #aaa;
   flex-shrink: 0;
-  margin-left: 0.1rem;
+  margin-left: 0.08rem;
 }
 
 /* ── Card message ── */
-.pcMsg {
-  font-size: 0.6rem;
+.cardMsg {
+  font-size: 0.56rem;
   font-weight: 400;
   color: #2a2a2a;
-  line-height: 1.45;
+  line-height: 1.42;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.pcRed {
+.cardRed {
   color: var(--red);
   font-weight: 600;
   font-style: italic;
@@ -186,23 +188,23 @@
 /* ============================================
    DASHBOARD
    ============================================ */
-.dashboardWrap {
+.dashWrap {
   position: relative;
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.5),
     0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-.dashboardWrap::before {
+.dashWrap::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 25px;
+  height: 30px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
   z-index: 1;
   pointer-events: none;
@@ -219,32 +221,32 @@
    ============================================ */
 @media (max-width: 768px) {
   .proofField {
-    height: clamp(460px, 65vh, 560px);
+    height: clamp(440px, 62vh, 550px);
   }
 
   .proofCard {
-    width: clamp(155px, 42vw, 195px);
-    padding: 0.5rem 0.55rem;
+    width: clamp(140px, 40vw, 185px);
+    padding: 0.45rem 0.5rem;
     border-radius: 8px;
   }
 
-  .pcAvatar {
-    width: 22px;
-    height: 22px;
+  .cardAvatar {
+    width: 20px;
+    height: 20px;
   }
 
-  .pcName {
-    font-size: 0.56rem;
-    max-width: 80px;
+  .cardName {
+    font-size: 0.52rem;
+    max-width: 72px;
   }
 
-  .pcMsg {
-    font-size: 0.55rem;
+  .cardMsg {
+    font-size: 0.5rem;
     -webkit-line-clamp: 3;
   }
 
-  .pcTime {
-    font-size: 0.48rem;
+  .cardTime {
+    font-size: 0.44rem;
   }
 }
 
@@ -253,27 +255,27 @@
    ============================================ */
 @media (min-width: 769px) {
   .proofField {
-    height: clamp(540px, 65vh, 700px);
+    height: clamp(520px, 62vh, 680px);
   }
 
   .proofCard {
-    width: clamp(200px, 18vw, 260px);
-    padding: 0.65rem 0.75rem;
+    width: clamp(190px, 17vw, 250px);
+    padding: 0.6rem 0.7rem;
     border-radius: 12px;
   }
 
-  .pcAvatar {
-    width: 28px;
-    height: 28px;
+  .cardAvatar {
+    width: 26px;
+    height: 26px;
   }
 
-  .pcName {
-    font-size: 0.66rem;
-    max-width: 120px;
+  .cardName {
+    font-size: 0.62rem;
+    max-width: 110px;
   }
 
-  .pcMsg {
-    font-size: 0.64rem;
+  .cardMsg {
+    font-size: 0.6rem;
     -webkit-line-clamp: 5;
   }
 }
@@ -282,5 +284,23 @@
 @media (prefers-reduced-motion: reduce) {
   .proofCard {
     will-change: auto;
+    opacity: 0.8;
+    position: static;
+    display: inline-block;
+    margin: 0.4rem;
+    vertical-align: top;
+  }
+
+  .proofField {
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .tier_back {
+    filter: none;
+    opacity: 0.5;
   }
 }

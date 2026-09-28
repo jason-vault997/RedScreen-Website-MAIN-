@@ -353,9 +353,11 @@
     justify-content: flex-end;
     align-items: flex-start;
     text-align: left;
-    /* Content shifted ~1-1.5cm upward (larger padding pushes flex-end content higher) */
-    padding-bottom: clamp(2.8rem, 5.5vh, 4.5rem);
+    /* Base padding that anchors content from bottom */
+    padding-bottom: clamp(1rem, 2.5vh, 2rem);
     max-width: 100%;
+    /* Shift the whole content block ~1.5cm UPWARD visually */
+    transform: translateY(clamp(-70px, -8vh, -50px));
   }
 
   .microLabel {
